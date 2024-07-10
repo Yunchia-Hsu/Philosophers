@@ -1,7 +1,7 @@
 
 NAME := philo
 
-CC :=cc
+CC := cc
 
 #-fsanitize=thread
 CFLAGS := =Wall -Werror -Wextra -fsanitize=thread
@@ -25,10 +25,10 @@ all: $(NAME)
 
 clean:
 		@rm -fr $(OBJS_DIR)
-		@echo "$(YELLOW) $(OBJS_DIR) directory and object file were removed$(RESET)"
+		@echo "$(YELLOW) $(OBJS_DIR) directory and object files were removed$(RESET)"
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "Removed executable$(RESET)"
+	@echo "Removed $(RESET)"
 
 re: fclean all

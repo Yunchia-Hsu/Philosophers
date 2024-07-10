@@ -17,20 +17,33 @@
 
 
 
+
+//philo:   5人 800死 200吃 200睡覺  
+
 typedef struct s_philo
 {
     pthread_t t;
-    int philo_n;
+    int philo_n;//id
+    long		time_to_die;
+	long		time_to_eat;
+	long		time_to_sleep;
+    long last_eat_time;//use long because we use millm isecond
+    pthread_t thread_id;
 
-} t_philo
+} t_philo;
 
 
 typedef struct s_program
 {
-    int dead;
+    bool dead;
     int *philo;
+    int fork_id; //for debug
+    
     //   3   pthread_mutex_t 
-    pthread_mutex_t fork;
+    pthread_mutex_t l_fork;
+    pthread_mutex_t r_fork;
+    pthread_mutex_t eating_lock;
+    t_philo *philos;
 } t_program
 
 
