@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:47:04 by alli              #+#    #+#             */
-/*   Updated: 2024/07/11 10:35:44 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/11 11:33:51 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ routine()
 
 monitor()
 {
-
+	while (1)
+	{
+		
+	}
 //infinite loop until philo dies
 //check die; time now - last meal < the time philo needs to die
 
@@ -39,19 +42,19 @@ monitor()
 
 int	init_philo(t_pphilo	*philo, )
 
-int	init_program(t_philo *philo, char **argv)
+int	init_program(t_program *data, char **argv)
 {
 	int	i;
 
 	i = 0;
 	if (!argv)
 		return (0);
-	philo->philo_n = ft_atoi(argv[1]);
-	philo->time_to_die = ft_atoi(argv[2]);
-	philo->time_to_eat = ft_atoi(argv[3]);
-	philo->time_to_sleep = ft_atoi(argv[4]);
+	data->philo_n = ft_atoi(argv[1]);
+	data->time_to_die = ft_atoi(argv[2]);
+	data->time_to_eat = ft_atoi(argv[3]);
+	data->time_to_sleep = ft_atoi(argv[4]);
 	if (argv[5])
-		philo->meals_to_eat = ft_atoi(argv[5]);
+		data->meals_to_eat = ft_atoi(argv[5]);
 	return (1);
 }
 

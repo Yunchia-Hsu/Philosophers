@@ -38,7 +38,9 @@ typedef struct s_philo
     //   3   pthread_mutex_t 
     pthread_mutex_t l_fork;
 	pthread_mutex_t	r_fork;
-	pthread_mutex_t	eating_lock;
+	pthread_mutex_t	eating_lock;//only 1 philosopher can eat
+	pthread_mutex_t	print_lock; //only 1 philosopher can print at a time
+	pthread_mutex_t	death_lock; //only 1 death
 } t_philo;
 
 /*philosopher utilities*/
