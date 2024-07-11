@@ -24,25 +24,33 @@ typedef struct s_philo
 {
     pthread_t t;
     int philo_n;//id
+    int n_meal_had;
     long		time_to_die;
 	long		time_to_eat;
 	long		time_to_sleep;
-    long last_eat_time;//use long because we use millm isecond
+     last_eat_time;//use long because we use millm isecond
+    status;// eating or sleeping
     pthread_t thread_id;
 
 } t_philo;
-
 
 typedef struct s_program
 {
     bool dead;
     int *philo;
     int fork_id; //for debug
-    
+    int n_philo_full;
+    int n_meals_option;
     //   3   pthread_mutex_t 
     pthread_mutex_t l_fork;
     pthread_mutex_t r_fork;
-    pthread_mutex_t eating_lock;
+    pthread_mutex_t eat_lock;
+    pthread_mutex_t sleep_lock;
+    pthread_mutex_t print_lock;
+
+    pthread_t *philos;
+    pthread_t check_die;//check if one philo dies
+    pthread_t check_full;//check if all philos r full
     t_philo *philos;
 } t_program
 

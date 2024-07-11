@@ -77,9 +77,16 @@ int main(int argc, char *argv[])
     if (init_program(&data, argv))
         return (1);
     
-    //every philo is a thread  create threads; monitor is also a thread
-    if (routine(&data, argv))
-        return (1);
+     
+    threads();
+    /* run threads: 
+    1. create philo and check threads and run routine ; every philo is a thread  create threads
+    2. monitor- if die thread 
+    3. monitor-if full thread
+    4.threads join 
+   
+    */
+   
     
     //monitor die 
 
