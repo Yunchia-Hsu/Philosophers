@@ -6,7 +6,7 @@
 /*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:47:04 by alli              #+#    #+#             */
-/*   Updated: 2024/07/11 15:55:41 by yhsu             ###   ########.fr       */
+/*   Updated: 2024/07/11 17:43:50 by yhsu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,33 +58,35 @@ int	init_program(t_program *data, char **argv)
 	return (0);
 }
 
-int	check_args(int argc, char **argv)
-{
-	int	i;
+// int	check_args(int argc, char **argv)
+// {
+// 	int	i;
 
-	i = 1;
-	if (argc == 5 || argc == 6)
-	{
-		while (i <= argc)
-		{
-			if (0 < ft_atoi((argv[i])))
-				i++;
-			if (0 < ft_atoi((argv[argc])))
-				return (0);
-			else
-			{
-				printf("positive numeric arguments only\n");
-				return (1);
-			}
-		}
-	}
-	else
-		printf("argument count not correct\n");
-	return (0);
-}
+// 	i = 1;
+// 	if (argc == 5 || argc == 6)
+// 	{
+// 		while (i <= argc)
+// 		{
+// 			if (0 < ft_atoi((argv[i])))
+// 				i++;
+// 			if (0 < ft_atoi((argv[argc])))
+// 				return (0);
+// 			else
+// 			{
+// 				printf("positive numeric arguments only\n");
+// 				return (1);
+// 			}
+// 		}
+// 	}
+// 	else
+// 		printf("argument count not correct\n");
+// 	return (0);
+// }
 
 int init_threads(t_philo *philo, char **argv)
 {
+   pthread_t monitor;
+   
     
 }
 
