@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:47:04 by alli              #+#    #+#             */
-/*   Updated: 2024/07/11 14:02:10 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/11 14:13:41 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,6 @@ int monitor_die()
 
 }
 
-int	init_philo(t_philo	*philo, )
-
-int	init_program(t_program *data, char **argv)
-{
-	int	i;
-
-	i = 0;
-	if (!argv)
-		return (1);
-	data->philo_n = ft_atoi(argv[1]);
-	data->time_to_die = ft_atoi(argv[2]);
-	data->time_to_eat = ft_atoi(argv[3]);
-	data->time_to_sleep = ft_atoi(argv[4]);
-	if (argv[5])
-		data->meals_to_eat = ft_atoi(argv[5]);
-	return (0);
-}
 
 int	check_args(int argc, char **argv)
 {
@@ -88,11 +71,11 @@ int	main(int argc, char **argv)
 	t_philo	*philo;
 	t_program	*data;
 	
-	if (!check_args(argc, argv))
+	if (check_args(argc, argv))
 		return (1);//error printed
-	if (!init_program(&data, argv)) //this is a shared resource for all the philosophers should be program
+	if (init_program(&data, argv)) //this is a shared resource for all the philosophers should be program
 		return (1);
-	if (!init_philo(&philo, argv)) //this should be what kind of data each philosopher carries
+	if (init_philo(&philo, argv)) //this should be what kind of data each philosopher carries
 		return (1);
 }
 
