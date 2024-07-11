@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:44:31 by alli              #+#    #+#             */
-/*   Updated: 2024/07/10 16:04:30 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/11 14:13:30 by yhsu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	check_longint(long num, int dig)
 	return (0);
 }
 
-int	ft_atoi(const char *str)
+long	ft_atol(const char *str)
 {
 	int				sign;
 	long			total;
