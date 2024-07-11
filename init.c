@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 14:03:01 by alli              #+#    #+#             */
-/*   Updated: 2024/07/11 15:32:13 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/11 15:41:50 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,14 @@ int	init_philo(t_philo	*philo, t_program *data)
 		philo[i].philo_index = i;
 		philo[i].data = data;
 		philo[i].n_philo_full = false;
-		philo[i].r_fork = data.forks[i];
+		philo[i].num_meals_eaten = 0;
+        philo[i].last_meal_time = data->start_time;
+        philo[i].all_meals_eaten = false;
+		philo[i].r_fork = &data->forks[i];
 		if (i == (data->philo_n - 1))
-			philo[i].l_fork = data->forks[1];
+			philo[i].l_fork = &data->forks[1];
 		else
-			philo[i].l_fork = data->forks[i + 1];
+			philo[i].l_fork = &data->forks[i + 1];
 		if (init_philo_mutexes(philo))
 			return (1);
 	}
