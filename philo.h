@@ -6,7 +6,7 @@
 /*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 14:14:25 by yhsu              #+#    #+#             */
-/*   Updated: 2024/07/11 15:29:49 by yhsu             ###   ########.fr       */
+/*   Updated: 2024/07/11 15:50:34 by yhsu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ struct timeval	time;
 typedef struct s_program
 {
     int philo_n;
+	size_t	start_time;
 	long	time_to_eat;
 	long	time_to_die;
 	long	time_to_sleep;
@@ -51,8 +52,9 @@ typedef struct s_philo
     //   3   pthread_mutex_t 
 	bool n_philo_full;
 	int	philo_index;
-	long	last_eat_time;
+	long	last_meal_time;
 	int		num_meals_eaten;
+	int		all_meals_eaten;
     pthread_mutex_t *l_fork;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	sleep_lock;
@@ -62,11 +64,14 @@ typedef struct s_philo
 } t_philo;
 
 /*philosopher utilities*/
-long	ft_atoi(const char *str);
-int	ft_isdigit(char *str)
+long	ft_atol(const char *str);
+int	ft_isdigit(char *str);
+int	ft_putstr_fd(char *s, int fd);
 
+ 
 /*initializing*/
 int	init_philo(t_philo	*philo, t_program *data);
 int	init_program(t_program *data, char **argv);
+
 
 #endif

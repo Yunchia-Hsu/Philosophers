@@ -3,23 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
+/*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:44:31 by alli              #+#    #+#             */
-/*   Updated: 2024/07/11 14:13:30 by yhsu             ###   ########.fr       */
+/*   Updated: 2024/07/11 15:36:11 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_isdigit(char *str)
+int	ft_isdigit(int c)
 {
-	int	i;
-
-	i = 0;
-	while (str[i] && str[i] >= '0' && str[i] <= '9')
-		i++;
-	if (str[i] == '\0')
+	if (c >= '0' && c <= '9')
 		return (1);
 	else
 		return (0);
