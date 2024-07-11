@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/11 14:14:25 by yhsu              #+#    #+#             */
+/*   Updated: 2024/07/11 15:25:47 by yhsu             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
@@ -51,7 +62,7 @@ typedef struct s_philo
 } t_philo;
 
 /*philosopher utilities*/
-int	ft_atoi(const char *str);
+long	ft_atoi(const char *str);
 int	ft_isdigit(char *str)
 
 /*initializing*/
