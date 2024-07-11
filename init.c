@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 14:03:01 by alli              #+#    #+#             */
-/*   Updated: 2024/07/11 15:16:26 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/11 15:27:09 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ int	init_philo(t_philo	*philo, t_program *data)
 		philo[i].n_philo_full = false;
 		philo[i].r_fork = data.forks[i];
 		if (i == (data->philo_n - 1))
-			philo[i].l_fork = data->fork[1];
+			philo[i].l_fork = data->forks[1];
 		else
-			philo[i].l_fork = data->fork[i + 1];
+			philo[i].l_fork = data->forks[i + 1];
 		if (init_philo_mutexes(philo))
 			return (1);
 	}
