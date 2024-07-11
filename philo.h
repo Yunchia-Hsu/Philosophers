@@ -6,7 +6,7 @@
 /*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 14:14:25 by yhsu              #+#    #+#             */
-/*   Updated: 2024/07/11 15:25:47 by yhsu             ###   ########.fr       */
+/*   Updated: 2024/07/11 15:29:49 by yhsu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_program
 	long	time_to_eat;
 	long	time_to_die;
 	long	time_to_sleep;
-	int		meals_to_eat; //# of meals
+	int		meals_to_eat; //# of meals 6th argument
 	bool	dead_philo_flag;
 	bool	everyone_full_flag;
 	pthread_t	*philo_thread;
