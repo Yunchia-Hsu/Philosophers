@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
+/*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 14:14:25 by yhsu              #+#    #+#             */
-/*   Updated: 2024/07/11 15:25:47 by yhsu             ###   ########.fr       */
+/*   Updated: 2024/07/11 15:36:26 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_philo
 } t_philo;
 
 /*philosopher utilities*/
-long	ft_atoi(const char *str);
+long	ft_atol(const char *str);
 int	ft_isdigit(char *str)
 
 /*initializing*/
