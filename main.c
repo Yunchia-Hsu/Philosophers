@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:47:04 by alli              #+#    #+#             */
-/*   Updated: 2024/07/10 16:38:52 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/11 10:15:33 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,23 @@ monitor()
 //check die; time now - last meal < the time philo needs to die
 
 }
+
+int	init_program(t_philo *philo, char **argv)
+{
+	int	i;
+
+	i = 0;
+	if (!argv)
+		return (0);
+	philo->philo_n = argv[1];
+	philo->time_to_die = argv[2];
+	philo->time_to_eat = argv[3];
+	philo->time_to_sleep = argv[4];
+	if (argv[5])
+		philo->meals_to_eat = argv[5];
+	return (1);
+}
+
 int	check_args(int argc, char **argv)
 {
 	int	i;
@@ -45,27 +62,31 @@ int	check_args(int argc, char **argv)
 	{
 		while (i <= argc)
 		{
-			if (!ft_isdigit(argv[i]))
+			if (ft_isdigit(argv[i]))
 				i++;
-			else
+			if (ft_isdigit(argv[argc]))
 				return (1);
+			else
+			{
+				printf("numeric arguments only\n");
+				return (0);
+			}
 		}
 	}
 	else
-	{
 		printf("argument count not correct\n");
-		return (0);
-	}
-		
+	return (0);
 }
 
 int	main(int argc, char **argv)
 {
+	t_philo	*philo;
+	t_program	*program;
+	
 	if (!check_args(argc, argv))
 		return (1);//error printed
-	if (init_)
-	
-	
+	if (!init_program(argv))
+		return (1);
 }
 
 

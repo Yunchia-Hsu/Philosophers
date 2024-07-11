@@ -14,7 +14,9 @@
 # include <pthread.h>
 //gettimeofday
 # include <sys/time.h>
+# include <stdbool.h>
 
+struct timeval	time;
 
 typedef struct s_philo
 {
@@ -24,25 +26,23 @@ typedef struct s_philo
 	int	time_to_die;
 	int	time_to_sleep;
 	int	meals_to_eat;
-} t_philo
+	bool	dead_philo;
+	bool	has_eaten;
+} t_philo;
 
 
 typedef struct s_program
 {
     int dead;
-    int *philo;
+    t_philo *philo;
     //   3   pthread_mutex_t 
     pthread_mutex_t l_fork;
 	pthread_mutex_t	r_fork;
 	pthread_mutex_t	eating_lock;
-} t_program
+} t_program;
 
 /*philosopher utilities*/
 int	ft_atoi(const char *str);
-
-
-
-
-
+int	ft_isdigit(char *str)
 
 #endif
