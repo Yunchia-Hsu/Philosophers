@@ -6,7 +6,7 @@
 /*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:47:04 by alli              #+#    #+#             */
-/*   Updated: 2024/07/11 15:26:34 by yhsu             ###   ########.fr       */
+/*   Updated: 2024/07/11 15:55:41 by yhsu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int validate_input(int argc, char **argv)
     while (argv[i])
     {
         if (i == 1 && atol(argv[i]) <= 0)
-            return (ft_putstr_fd("invalid number of philosophers"), 1);
+            return (ft_putstr_fd("invalid number of philosophers", 2), 1);
         else if (i == 2 && atol(argv[i]) <= 0)
             return (ft_putstr_fd("invalid time to die", 2), 1);
         else if (i == 3 && atol(argv[i]) <= 0)

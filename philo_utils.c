@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:44:31 by alli              #+#    #+#             */
-/*   Updated: 2024/07/11 15:36:11 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/11 15:50:03 by yhsu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+
+int	ft_putstr_fd(char *s, int fd)
+{
+	size_t	i;
+
+	i = 0;
+	if (! s)
+	{
+		if (ft_putstr_fd("(null)", fd) == -1)
+			return (-1);
+		return (0);
+	}
+	if (write (fd, s, ft_strlen(s)) == -1)
+		return (-1);
+	return (0);
+}
+
 
 int	ft_isdigit(int c)
 {

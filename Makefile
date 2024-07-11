@@ -12,7 +12,7 @@ RESET := \033[0m
 #dericetories
 OBJS_DIR := objs/
 
-SRCS := main.c philo_utils.c init.c
+SRCS := main.c philo_utils.c init.c monitoring.c
 
 #object file with path
 OBJS := $(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
