@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:47:04 by alli              #+#    #+#             */
-/*   Updated: 2024/07/11 13:29:08 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/11 14:02:10 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int monitor_die()
 
 }
 
-int	init_philo(t_pphilo	*philo, )
+int	init_philo(t_philo	*philo, )
 
 int	init_program(t_program *data, char **argv)
 {
@@ -48,14 +48,14 @@ int	init_program(t_program *data, char **argv)
 
 	i = 0;
 	if (!argv)
-		return (0);
+		return (1);
 	data->philo_n = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
 	data->time_to_sleep = ft_atoi(argv[4]);
 	if (argv[5])
 		data->meals_to_eat = ft_atoi(argv[5]);
-	return (1);
+	return (0);
 }
 
 int	check_args(int argc, char **argv)
@@ -67,14 +67,14 @@ int	check_args(int argc, char **argv)
 	{
 		while (i <= argc)
 		{
-			if (0 < ft_atoi(ft_isdigit(argv[i])))
+			if (0 < ft_atoi((argv[i])))
 				i++;
-			if (0 < ft_atoi(ft_isdigit(argv[argc])))
-				return (1);
+			if (0 < ft_atoi((argv[argc])))
+				return (0);
 			else
 			{
 				printf("positive numeric arguments only\n");
-				return (0);
+				return (1);
 			}
 		}
 	}
@@ -108,13 +108,6 @@ int routine(t_program *data, char **argv)// 睡 思考 吃
     //destroy mutex; free data if allocate any
 }
 
-
-int init_philo(int argc, char **argv)
-{
-
-}
-
-ft_purstr_fd
      
 int validate_input(int argc, char **argv)
 {
