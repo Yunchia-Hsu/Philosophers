@@ -83,11 +83,60 @@ int	init_program(t_program *data, char **argv)
 // 	return (0);
 // }
 
-int init_threads(t_philo *philo, char **argv)
+
+
+int thread_join(pthread_t *monitor, t_philo *philo)
 {
-   pthread_t monitor;
-   
-    
+    int i;
+
+    i = 0;
+    if (pthread_join(monitor, NULL))
+    {
+        ft_putstr_fd("Error: monitor_join falied", 2);
+        return (free_threads());
+    }
+    while(i < philo->data->philo_n)
+    {
+        if (pthread_join(philo->data->philo_thread[i], NULL))
+        {
+            ft_putstr_fd("Error: philo_join falied", 2);
+            return (free_threads());
+        }
+        i++;
+    }
+    return (0);
+}
+
+
+int init_threads(t_philo *philo, t_program *data, char **argv)
+{
+    pthread_t monitor;
+    int i;
+
+    i = 0;
+    if (pthread_create(&monitor, NULL, &monitoring, philo))//philo is the argument for thread
+    {
+        ft_putstr_fd("Error: monitoring thread_creat failed", 2);
+        return (1);
+    }
+   while(i < philo->data->philo_n)
+   {
+       philo->data->philo_thread[i] = malloc(1 * sizeof(pthread_t));
+       if (!philo->data->philo_thread[i])
+       {
+            ft_putstr_fd("Error: malloc", 2);
+            return (free_threads());
+       }
+        if (pthread_create(&philo->data->philo_thread[i], NULL, &routine, philo))//alice check routine function
+        {
+            ft_putstr_fd("Error: philo thread_create failed", 2);
+            return (free_threads());
+        }
+      i++;  
+   }
+    if (thread_join(monitor, philo))
+        return (1);
+    return (0);
 }
 
 
@@ -110,7 +159,7 @@ int	main(int argc, char **argv)
     
     if (clean_all(&data, argv))
         return (1);
-    
+    return (0);
 }
 
 

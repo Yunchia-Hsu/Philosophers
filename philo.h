@@ -74,5 +74,8 @@ size_t get_current_time(void);
 int	init_philo(t_philo	*philo, t_program *data);
 int	init_program(t_program *data, char **argv);
 
+/*monitoring*/
+int monitoring(t_program *data, t_philo *philo);
+
 
 #endif
