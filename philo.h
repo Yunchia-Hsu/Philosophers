@@ -18,7 +18,7 @@
 
 struct timeval	time;
 
-typedef struct s_philo
+typedef struct s_program
 {
     pthread_t t;
     int philo_n;
@@ -28,10 +28,10 @@ typedef struct s_philo
 	int	meals_to_eat;
 	bool	dead_philo;
 	bool	has_eaten;
-} t_philo;
+} t_program;
 
 
-typedef struct s_program
+typedef struct s_philo
 {
     int dead;
     t_philo *philo;
@@ -39,7 +39,7 @@ typedef struct s_program
     pthread_mutex_t l_fork;
 	pthread_mutex_t	r_fork;
 	pthread_mutex_t	eating_lock;
-} t_program;
+} t_philo;
 
 /*philosopher utilities*/
 int	ft_atoi(const char *str);

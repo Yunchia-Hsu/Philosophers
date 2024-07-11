@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:47:04 by alli              #+#    #+#             */
-/*   Updated: 2024/07/11 10:15:33 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/11 10:35:44 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ monitor()
 
 }
 
+int	init_philo(t_pphilo	*philo, )
+
 int	init_program(t_philo *philo, char **argv)
 {
 	int	i;
@@ -44,12 +46,12 @@ int	init_program(t_philo *philo, char **argv)
 	i = 0;
 	if (!argv)
 		return (0);
-	philo->philo_n = argv[1];
-	philo->time_to_die = argv[2];
-	philo->time_to_eat = argv[3];
-	philo->time_to_sleep = argv[4];
+	philo->philo_n = ft_atoi(argv[1]);
+	philo->time_to_die = ft_atoi(argv[2]);
+	philo->time_to_eat = ft_atoi(argv[3]);
+	philo->time_to_sleep = ft_atoi(argv[4]);
 	if (argv[5])
-		philo->meals_to_eat = argv[5];
+		philo->meals_to_eat = ft_atoi(argv[5]);
 	return (1);
 }
 
@@ -62,13 +64,13 @@ int	check_args(int argc, char **argv)
 	{
 		while (i <= argc)
 		{
-			if (ft_isdigit(argv[i]))
+			if (0 < ft_atoi(ft_isdigit(argv[i])))
 				i++;
-			if (ft_isdigit(argv[argc]))
+			if (0 < ft_atoi(ft_isdigit(argv[argc])))
 				return (1);
 			else
 			{
-				printf("numeric arguments only\n");
+				printf("positive numeric arguments only\n");
 				return (0);
 			}
 		}
@@ -81,11 +83,13 @@ int	check_args(int argc, char **argv)
 int	main(int argc, char **argv)
 {
 	t_philo	*philo;
-	t_program	*program;
+	t_program	*data;
 	
 	if (!check_args(argc, argv))
 		return (1);//error printed
-	if (!init_program(argv))
+	if (!init_program(&data, argv)) //this is a shared resource for all the philosophers should be program
+		return (1);
+	if (!init_philo(&philo, argv)) //this should be what kind of data each philosopher carries
 		return (1);
 }
 
