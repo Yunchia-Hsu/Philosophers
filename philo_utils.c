@@ -28,7 +28,7 @@ size_t get_current_time(void)
 	struct timevaltime;
 	
 	if (gettimeofday(&time, NULL) == -1)
-		ft_putstr_fd("Error: getimeof day failed");
+		ft_putstr_fd("Error: getimeof day failed\n");
 	
 	return (time.tv_usec * 1000 + time.tv_usec / 1000);
 	

@@ -26,15 +26,15 @@ int validate_input(int argc, char **argv)
     while (argv[i])
     {
         if (i == 1 && atol(argv[i]) <= 0)
-            return (ft_putstr_fd("invalid number of philosophers", 2), 1);
+            return (ft_putstr_fd("invalid number of philosophers\n", 2), 1);
         else if (i == 2 && atol(argv[i]) <= 0)
-            return (ft_putstr_fd("invalid time to die", 2), 1);
+            return (ft_putstr_fd("invalid time to die\n", 2), 1);
         else if (i == 3 && atol(argv[i]) <= 0)
-            return (ft_putstr_fd("invalid time to eat", 2), 1);
+            return (ft_putstr_fd("invalid time to eat\n", 2), 1);
         else if (i == 4 && atol(argv[i]) <= 0)
-            return (ft_putstr_fd("invalid time to sleep", 2), 1);
+            return (ft_putstr_fd("invalid time to sleep\n", 2), 1);
         else if (i == 5 && atol(argv[i]) < 0)
-            return (ft_putstr_fd("invalid times each philo should eat", 2), 1);
+            return (ft_putstr_fd("invalid times each philo should eat\n", 2), 1);
         i++;
     }
     return (0);
@@ -42,21 +42,21 @@ int validate_input(int argc, char **argv)
 
 
 
-int	init_program(t_program *data, char **argv)
-{
-	int	i;
+// int	init_program(t_program *data, char **argv)
+// {
+// 	int	i;
 
-	i = 0;
-	if (!argv)
-		return (1);
-	data->philo_n = ft_atoi(argv[1]);
-	data->time_to_die = ft_atoi(argv[2]);
-	data->time_to_eat = ft_atoi(argv[3]);
-	data->time_to_sleep = ft_atoi(argv[4]);
-	if (argv[5])
-		data->meals_to_eat = ft_atoi(argv[5]);
-	return (0);
-}
+// 	i = 0;
+// 	if (!argv)
+// 		return (1);
+// 	data->philo_n = ft_atoi(argv[1]);
+// 	data->time_to_die = ft_atoi(argv[2]);
+// 	data->time_to_eat = ft_atoi(argv[3]);
+// 	data->time_to_sleep = ft_atoi(argv[4]);
+// 	if (argv[5])
+// 		data->meals_to_eat = ft_atoi(argv[5]);
+// 	return (0);
+// }
 
 // int	check_args(int argc, char **argv)
 // {
@@ -92,14 +92,14 @@ int thread_join(pthread_t *monitor, t_philo *philo)
     i = 0;
     if (pthread_join(monitor, NULL))
     {
-        ft_putstr_fd("Error: monitor_join falied", 2);
+        ft_putstr_fd("Error: monitor_join falied\n", 2);
         return (free_threads());
     }
     while(i < philo->data->philo_n)
     {
         if (pthread_join(philo->data->philo_thread[i], NULL))
         {
-            ft_putstr_fd("Error: philo_join falied", 2);
+            ft_putstr_fd("Error: philo_join falied\n", 2);
             return (free_threads());
         }
         i++;
@@ -116,7 +116,7 @@ int init_threads(t_philo *philo, t_program *data, char **argv)
     i = 0;
     if (pthread_create(&monitor, NULL, &monitoring, philo))//philo is the argument for thread
     {
-        ft_putstr_fd("Error: monitoring thread_creat failed", 2);
+        ft_putstr_fd("Error: monitoring thread_creat failed\n", 2);
         return (1);
     }
    while(i < philo->data->philo_n)
@@ -124,12 +124,12 @@ int init_threads(t_philo *philo, t_program *data, char **argv)
        philo->data->philo_thread[i] = malloc(1 * sizeof(pthread_t));
        if (!philo->data->philo_thread[i])
        {
-            ft_putstr_fd("Error: malloc", 2);
+            ft_putstr_fd("Error: malloc\n", 2);
             return (free_threads());
        }
-        if (pthread_create(&philo->data->philo_thread[i], NULL, &routine, philo))//alice check routine function
+        if (pthread_create(&philo->data->philo_thread[i], NULL, &philo_routine, philo))
         {
-            ft_putstr_fd("Error: philo thread_create failed", 2);
+            ft_putstr_fd("Error: philo thread_create failed\n", 2);
             return (free_threads());
         }
       i++;  
@@ -149,15 +149,19 @@ int	main(int argc, char **argv)
         return (1);
 	// if (check_args(argc, argv))
 	// 	return (1);//error printed
-	if (init_program(&data, argv)) //this is a shared resource for all the philosophers should be program
-		return (1);
-	if (init_philo(&philo, argv)) //this should be what kind of data each philosopher carries
-		return (1);
+	if (init_program(data, argv)) //this is a shared resource for all the philosophers should be program
+		return (clean_program(data));
+	
+    philo = malloc(data->philo_n * sizeof(t_philo));
+    if (!philo)
+        return (clean_program(data));
+    if (init_philo(philo, argv)) //this should be what kind of data each philosopher carries
+		return (clean_all(data, philo));
     
-    if (init_threads(&philo, argv))
-        return (1);
+    if (init_threads(philo, data, argv))
+        return (clean_all(data, philo));
     
-    if (clean_all(&data, argv))
+    if (clean_all(data, argv))
         return (1);
     return (0);
 }

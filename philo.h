@@ -31,36 +31,38 @@ struct timeval	time;
 
 typedef struct s_program
 {
-    int philo_n;
+    int 	philo_n;
 	size_t	start_time;
 	long	time_to_eat;
 	long	time_to_die;
 	long	time_to_sleep;
 	int		meals_to_eat; //# of meals 6th argument
-	bool	dead_philo_flag;
+	bool	dead_philo_flag;// if one philois dead, it turns true
 	bool	everyone_full_flag;
 	pthread_t	*philo_thread;
 	pthread_mutex_t	*forks;
+	//Alice:the three mutex below were in philo struct , need to reinit
+	pthread_mutex_t	eating_lock;//only 1 philosopher can eat
+	pthread_mutex_t	print_lock; //only 1 philosopher can print at a time
+	pthread_mutex_t	death_lock;
 	//pthread_t	thread_id; for debugging
 } t_program;
 //philo:   5人 800死 200吃 200睡覺  
 
 typedef struct s_philo
 {
-    int dead;
+    int 		dead;
     t_program	*data;
-	bool n_philo_full;
-	int	philo_index;
+	bool 	n_philo_full;//philo[index] is fill
+	int		philo_index;//index starts from 1
 	long	last_meal_time;
 	int		num_meals_eaten;
-	bool		all_meals_eaten;
+	bool	all_meals_eaten;
 	
     pthread_mutex_t *l_fork;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	sleep_lock;
-	pthread_mutex_t	eating_lock;//only 1 philosopher can eat
-	pthread_mutex_t	print_lock; //only 1 philosopher can print at a time
-	pthread_mutex_t	death_lock; //only 1 death
+	 //only 1 death
 } t_philo;
 
 /*philosopher utilities*/
@@ -77,5 +79,8 @@ int	init_program(t_program *data, char **argv);
 /*monitoring*/
 int monitoring(t_program *data, t_philo *philo);
 
-
+/*clean all*/
+void clean_all(t_program *data, t_philo *philo);
+int clean_philo(t_program *data, t_philo *philo);
+int clean_program(t_program *data);
 #endif
