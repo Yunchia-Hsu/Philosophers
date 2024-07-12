@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 08:18:41 by alli              #+#    #+#             */
-/*   Updated: 2024/07/12 09:49:59 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/12 11:45:51 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ size_t get_current_time(void)
 	struct timeval time;
 	
 	if (gettimeofday(&time, NULL) == -1)
-		ft_putstr_fd("Error: getimeof day failed");
+		ft_putstr_fd("Error: getimeof day failed", 2);
 	
 	return (time.tv_usec * 1000 + time.tv_usec / 1000);
 	

@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 08:19:34 by alli              #+#    #+#             */
-/*   Updated: 2024/07/12 10:18:48 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/12 11:40:37 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	init_philo(t_philo	*philo, t_program *data)
 	int	i;
 
 	i = 1;//index starts from 1
-	philo = malloc(sizeof(t_philo) * data->philo_n)
+	philo = malloc(sizeof(t_philo) * data->philo_n);
 	if (!philo)
 		return (1);
 	while (i <= data->philo_n)

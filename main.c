@@ -115,7 +115,7 @@ int init_threads(t_philo *philo, t_program *data, char **argv)
             ft_putstr_fd("Error: malloc", 2);
             return (free_threads());
        }
-        if (pthread_create(&philo->data->philo_thread[i], NULL, &routine, philo))//alice check routine function
+        if (pthread_create(&philo->data->philo_thread[i], NULL, &philo_routine, philo))//alice check routine function
         {
             ft_putstr_fd("Error: philo thread_create failed", 2);
             return (free_threads());
@@ -142,7 +142,7 @@ int	main(int argc, char **argv)
 	if (init_philo(&philo, argv)) //this should be what kind of data each philosopher carries
 		return (1);
     
-    if (init_threads(&philo, argv))
+    if (init_threads(&philo, &data, argv))
         return (1);
     
     if (clean_all(&data, argv))

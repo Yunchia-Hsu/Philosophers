@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:12:13 by alli              #+#    #+#             */
-/*   Updated: 2024/07/12 11:33:04 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/12 11:44:28 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	starvation_check(t_philo *philo)
 	size_t	elapsed_time;
 	size_t	over_time;
 
-	pthread_mutex_lock(&philo->data->death_lock)
+	pthread_mutex_lock(&philo->data->death_lock);
 	elapsed_time = get_current_time() - philo->data->start_time;//not sure what the problem is here
 	over_time = get_current_time() - philo->last_meal_time;
 	if (elapsed_time > philo->data->time_to_eat || 
@@ -58,7 +58,7 @@ int	die_alone(t_philo *philo)
 	return (1);
 }
 
-int	eat(t_philo *philo)
+static int	eat(t_philo *philo)
 {
 	if (dead_or_finished(philo))
 		return (1);
@@ -78,7 +78,7 @@ int	eat(t_philo *philo)
 	return (0);
 }
 
-int	sleep(t_philo *philo)
+static int	sleep(t_philo *philo)
 {
 	if (dead_or_finished(philo))
 		return (1);
@@ -92,7 +92,7 @@ int	sleep(t_philo *philo)
 	return (1);
 }
 
-int	think(t_philo *philo)
+static int	think(t_philo *philo)
 {
 	if (dead_or_finished(philo))
 		return (1);

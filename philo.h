@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 08:18:33 by alli              #+#    #+#             */
-/*   Updated: 2024/07/12 09:05:29 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/12 11:45:35 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,15 @@ int	ft_isdigit(char *str);
 int	ft_putstr_fd(char *s, int fd);
 void ft_usleep(long millisecond);
 size_t get_current_time(void);
+
+/*philo routine*/
+void	philo_routine(void *ptr);
+
+/*dead or finished check*/
+int	dead_or_finished(t_philo *philo);
+int	die_alone(t_philo *philo);
+int	starvation_check(t_philo *philo);
+int	finished_meals(t_philo *philo);
 
 /*initializing*/
 int	init_philo(t_philo	*philo, t_program *data);
