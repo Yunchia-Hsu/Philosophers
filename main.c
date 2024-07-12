@@ -1,14 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/10 15:47:04 by alli              #+#    #+#             */
-/*   Updated: 2024/07/11 16:11:09 by alli             ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
 
 #include "philo.h"
 
@@ -26,7 +16,7 @@ int validate_input(int argc, char **argv)
     while (argv[i])
     {
         if (i == 1 && atol(argv[i]) <= 0)
-            return (ft_putstr_fd("invalid number of philosophers"), 1);
+            return (ft_putstr_fd("invalid number of philosophers", 2), 1);
         else if (i == 2 && atol(argv[i]) <= 0)
             return (ft_putstr_fd("invalid time to die", 2), 1);
         else if (i == 3 && atol(argv[i]) <= 0)
@@ -56,34 +46,85 @@ int	init_program(t_program *data, char **argv)
 	return (0);
 }
 
-int	check_args(int argc, char **argv)
-{
-	int	i;
+// int	check_args(int argc, char **argv)
+// {
+// 	int	i;
 
-	i = 1;
-	if (argc == 5 || argc == 6)
-	{
-		while (i <= argc)
-		{
-			if (0 < ft_atoi((argv[i])))
-				i++;
-			if (0 < ft_atoi((argv[argc])))
-				return (0);
-			else
-			{
-				printf("positive numeric arguments only\n");
-				return (1);
-			}
-		}
-	}
-	else
-		printf("argument count not correct\n");
-	return (0);
+// 	i = 1;
+// 	if (argc == 5 || argc == 6)
+// 	{
+// 		while (i <= argc)
+// 		{
+// 			if (0 < ft_atoi((argv[i])))
+// 				i++;
+// 			if (0 < ft_atoi((argv[argc])))
+// 				return (0);
+// 			else
+// 			{
+// 				printf("positive numeric arguments only\n");
+// 				return (1);
+// 			}
+// 		}
+// 	}
+// 	else
+// 		printf("argument count not correct\n");
+// 	return (0);
+// }
+
+
+
+int thread_join(pthread_t *monitor, t_philo *philo)
+{
+    int i;
+
+    i = 0;
+    if (pthread_join(monitor, NULL))
+    {
+        ft_putstr_fd("Error: monitor_join falied", 2);
+        return (free_threads());
+    }
+    while(i < philo->data->philo_n)
+    {
+        if (pthread_join(philo->data->philo_thread[i], NULL))
+        {
+            ft_putstr_fd("Error: philo_join falied", 2);
+            return (free_threads());
+        }
+        i++;
+    }
+    return (0);
 }
 
-int init_threads(t_philo *philo, char **argv)
+
+int init_threads(t_philo *philo, t_program *data, char **argv)
 {
-    
+    pthread_t monitor;
+    int i;
+
+    i = 0;
+    if (pthread_create(&monitor, NULL, &monitoring, philo))//philo is the argument for thread
+    {
+        ft_putstr_fd("Error: monitoring thread_creat failed", 2);
+        return (1);
+    }
+   while(i < philo->data->philo_n)
+   {
+       philo->data->philo_thread[i] = malloc(1 * sizeof(pthread_t));
+       if (!philo->data->philo_thread[i])
+       {
+            ft_putstr_fd("Error: malloc", 2);
+            return (free_threads());
+       }
+        if (pthread_create(&philo->data->philo_thread[i], NULL, &routine, philo))//alice check routine function
+        {
+            ft_putstr_fd("Error: philo thread_create failed", 2);
+            return (free_threads());
+        }
+      i++;  
+   }
+    if (thread_join(monitor, philo))
+        return (1);
+    return (0);
 }
 
 
@@ -106,7 +147,7 @@ int	main(int argc, char **argv)
     
     if (clean_all(&data, argv))
         return (1);
-    
+    return (0);
 }
 
 

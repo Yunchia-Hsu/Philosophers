@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/11 14:03:01 by alli              #+#    #+#             */
-/*   Updated: 2024/07/11 15:41:50 by alli             ###   ########.fr       */
+/*   Created: 2024/07/09 08:19:34 by alli              #+#    #+#             */
+/*   Updated: 2024/07/12 10:18:48 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ int	init_philo_mutexes(t_philo *philo)
 		return (1);
 	if (pthread_mutex_init(&philo->eating_lock, NULL))
 		return (1);
-	if (pthread_mutex_init(&philo->print_lock, NULL))
+	if (pthread_mutex_init(&philo->data->print_lock, NULL))
 		return (1);
-	if (pthread_mutex_init(&philo->death_lock, NULL))
+	if (pthread_mutex_init(&philo->data->death_lock, NULL))
 		return (1);
 }
 
@@ -52,12 +52,15 @@ int	init_program(t_program *data, char **argv)
 	i = 0;
 	if (!argv)
 		return (1);
+	data->start_time = get_current_time();
 	data->philo_n = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
 	data->time_to_sleep = ft_atoi(argv[4]);
 	if (argv[5])
 		data->meals_to_eat = ft_atoi(argv[5]);
+	data->dead_philo_flag = false;
+	data->everyone_full_flag = false;
 	if (init_data_mutexes(data))
 		return (1);
 	return (0);
@@ -68,11 +71,15 @@ int	init_philo(t_philo	*philo, t_program *data)
 	int	i;
 
 	i = 1;//index starts from 1
+	philo = malloc(sizeof(t_philo) * data->philo_n)
+	if (!philo)
+		return (1);
 	while (i <= data->philo_n)
 	{
 		philo[i].philo_index = i;
 		philo[i].data = data;
 		philo[i].n_philo_full = false;
+		philo[i].i_died = false;
 		philo[i].num_meals_eaten = 0;
         philo[i].last_meal_time = data->start_time;
         philo[i].all_meals_eaten = false;
