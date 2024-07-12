@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 08:18:33 by alli              #+#    #+#             */
-/*   Updated: 2024/07/12 11:45:35 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/12 14:36:56 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,12 @@ typedef struct s_program
 
 typedef struct s_philo
 {
-    bool i_died;
     t_program	*data;
 	bool n_philo_full;
 	int	philo_index;
 	long	last_meal_time;
 	int		num_meals_eaten;
 	bool		all_meals_eaten;
-	
     pthread_mutex_t *l_fork;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	sleep_lock;

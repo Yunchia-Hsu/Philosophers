@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:12:13 by alli              #+#    #+#             */
-/*   Updated: 2024/07/12 11:44:28 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/12 14:44:25 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,12 @@ int	starvation_check(t_philo *philo)
 	size_t	over_time;
 
 	pthread_mutex_lock(&philo->data->death_lock);
-	elapsed_time = get_current_time() - philo->data->start_time;//not sure what the problem is here
-	over_time = get_current_time() - philo->last_meal_time;
-	if (elapsed_time > philo->data->time_to_eat || 
-		over_time > philo->data->time_to_eat)
+	//pthread_mutex_lock(&philo->eating_lock);
+	elapsed_time = get_current_time() - philo->last_meal_time;
+	if (elapsed_time > philo->data->time_to_eat)
 	{
 		pthread_mutex_unlock(&philo->data->death_lock);
-		philo->i_died = true;
+		philo->data->dead_philo_flag = true;
 		//philo->data->dead_philo_flag = true or a dead philosopher function
 		return (1);
 	}
@@ -68,6 +67,7 @@ static int	eat(t_philo *philo)
 	print_action(philo, "has taken right fork");
 	pthread_mutex_lock(philo->l_fork);
 	print_action(philo, "has taken left fork");
+	pthread_mutex_lock(philo->eating_lock);
 	ft_usleep(philo->data->time_to_eat);
 	print_action(philo, "is eating");
 	philo->last_meal_time = get_current_time() - philo->data->start_time;
@@ -75,6 +75,7 @@ static int	eat(t_philo *philo)
 		philo->num_meals_eaten++;
 	pthread_mutex_unlock(philo->l_fork);
 	pthread_mutex_unlock(philo->r_fork);
+	pthread_mutex_unlock(philo->eating_lock);
 	return (0);
 }
 
@@ -106,11 +107,11 @@ void	philo_routine(void *ptr)
 	philo = (t_philo *)ptr;
 	while (!dead_or_finished(philo))
 	{
-		if (eat(philo))
-			return (1);
-		if (sleep(philo))
-			return (1);
-		if (think(philo))
-			return (1);
+		if (eat(philo) == 1)
+			return ;
+		if (sleep(philo) == 1)
+			return ;
+		if (think(philo) == 1)
+			return ;
 	}
 }

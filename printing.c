@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:31:46 by alli              #+#    #+#             */
-/*   Updated: 2024/07/12 11:46:12 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/12 15:27:40 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ void print_action(t_philo *philo, char *str)
 	size_t	time;
 	
 	pthread_mutex_lock(&philo->data->print_lock);
-	if (philo->i_died = true || philo->n_philo_full)
+	if (philo->data->dead_philo_flag = true || philo->n_philo_full)
 		return ;
 	time = get_current_time() - philo->data->start_time;
 	printf("%d Philosopher %d %s", time, philo->philo_index, str);
+	pthread_mutex_unlock(&philo->data->print_lock);
 }

@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 08:19:34 by alli              #+#    #+#             */
-/*   Updated: 2024/07/12 11:40:37 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/12 15:36:02 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int	init_philo(t_philo	*philo, t_program *data)
 		philo[i].philo_index = i;
 		philo[i].data = data;
 		philo[i].n_philo_full = false;
-		philo[i].i_died = false;
 		philo[i].num_meals_eaten = 0;
         philo[i].last_meal_time = data->start_time;
         philo[i].all_meals_eaten = false;
