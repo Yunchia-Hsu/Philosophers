@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:31:46 by alli              #+#    #+#             */
-/*   Updated: 2024/07/12 15:27:40 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/12 15:46:31 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void print_death(t_philo *philo)
 {
-	if (philo->i_died || philo->data->dead_philo_flag)
+	if (philo->data->dead_philo_flag)
 	{
 		printf("%d Philosopher %d %s", time, philo->philo_index, "has died");
 		//clean all

@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:12:13 by alli              #+#    #+#             */
-/*   Updated: 2024/07/12 14:44:25 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/12 15:46:11 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,15 @@ static int	eat(t_philo *philo)
 	print_action(philo, "has taken right fork");
 	pthread_mutex_lock(philo->l_fork);
 	print_action(philo, "has taken left fork");
-	pthread_mutex_lock(philo->eating_lock);
+	pthread_mutex_lock(&philo->eating_lock);
 	ft_usleep(philo->data->time_to_eat);
 	print_action(philo, "is eating");
-	philo->last_meal_time = get_current_time() - philo->data->start_time;
+	philo->last_meal_time = get_current_time() - philo->last_meal_time;
 	if (philo->data->meals_to_eat)
 		philo->num_meals_eaten++;
 	pthread_mutex_unlock(philo->l_fork);
 	pthread_mutex_unlock(philo->r_fork);
-	pthread_mutex_unlock(philo->eating_lock);
+	pthread_mutex_unlock(&philo->eating_lock);
 	return (0);
 }
 
