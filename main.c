@@ -1,14 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/10 15:47:04 by alli              #+#    #+#             */
-/*   Updated: 2024/07/11 17:43:50 by yhsu             ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
 
 #include "philo.h"
 
@@ -159,7 +149,7 @@ int	main(int argc, char **argv)
 		return (clean_all(data, philo));
     
     if (init_threads(philo, data, argv))
-        return (clean_all(data, philo));
+        return(clean_all(data, philo));
     
     if (clean_all(data, argv))
         return (1);

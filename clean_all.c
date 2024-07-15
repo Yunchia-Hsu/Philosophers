@@ -39,13 +39,13 @@ int clean_philo(t_program *data, t_philo *philo)
 }
 
 
-void clean_all(t_program *data, t_philo *philo)
+int clean_all(t_program *data, t_philo *philo)
 {
     clean_program(data);
     if (clean_philo(data, philo))
-        clean_program(data);
+        return (clean_program(data));
     free(philo);
     philo = NULL;
-    
+    return (0);
 }
 // free all threads and return(1)

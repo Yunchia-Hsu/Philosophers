@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
+/*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/10 15:44:31 by alli              #+#    #+#             */
-/*   Updated: 2024/07/11 17:41:47 by yhsu             ###   ########.fr       */
+/*   Created: 2024/07/12 08:18:41 by alli              #+#    #+#             */
+/*   Updated: 2024/07/15 12:57:29 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,21 @@ void ft_usleep(long millisecond)
 
 size_t get_current_time(void)
 {
-	struct timevaltime;
+	struct timeval time;
 	
 	if (gettimeofday(&time, NULL) == -1)
-		ft_putstr_fd("Error: getimeof day failed\n");
-	
+		ft_putstr_fd("Error: getimeof day failed\n", 2);	
 	return (time.tv_usec * 1000 + time.tv_usec / 1000);
-	
 }
+// int	safe_mutex_lock(pthread_mutex_t *str)
+// {
+// 	if (pthread_mutex_lock(str))
+// 	{
+// 		//clean all
+// 		return (1);
+// 	}
+// 	return (0);
+// }
 
 int	ft_putstr_fd(char *s, int fd)
 {

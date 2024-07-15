@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
+/*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/11 14:14:25 by yhsu              #+#    #+#             */
-/*   Updated: 2024/07/11 17:42:14 by yhsu             ###   ########.fr       */
+/*   Created: 2024/07/10 08:18:33 by alli              #+#    #+#             */
+/*   Updated: 2024/07/15 12:59:58 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef PHILO_H
 # define PHILO_H
@@ -41,28 +42,24 @@ typedef struct s_program
 	bool	everyone_full_flag;
 	pthread_t	*philo_thread;
 	pthread_mutex_t	*forks;
-	//Alice:the three mutex below were in philo struct , need to reinit
-	pthread_mutex_t	eating_lock;//only 1 philosopher can eat
 	pthread_mutex_t	print_lock; //only 1 philosopher can print at a time
-	pthread_mutex_t	death_lock;
+	pthread_mutex_t	death_lock; //only 1 death
+	pthread_mutex_t	eating_lock;
 	//pthread_t	thread_id; for debugging
 } t_program;
 //philo:   5人 800死 200吃 200睡覺  
 
 typedef struct s_philo
 {
-    int 		dead;
     t_program	*data;
 	bool 	n_philo_full;//philo[index] is fill
 	int		philo_index;//index starts from 1
 	long	last_meal_time;
 	int		num_meals_eaten;
-	bool	all_meals_eaten;
-	
+	bool		all_meals_eaten;
     pthread_mutex_t *l_fork;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	sleep_lock;
-	 //only 1 death
 } t_philo;
 
 /*philosopher utilities*/
@@ -72,6 +69,15 @@ int	ft_putstr_fd(char *s, int fd);
 void ft_usleep(long millisecond);
 size_t get_current_time(void);
 
+/*philo routine*/
+void	philo_routine(void *ptr);
+
+/*dead or finished check*/
+int	dead_or_finished(t_philo *philo);
+int	die_alone(t_philo *philo);
+int	starvation_check(t_philo *philo);
+int	finished_meals(t_philo *philo);
+
 /*initializing*/
 int	init_philo(t_philo	*philo, t_program *data);
 int	init_program(t_program *data, char **argv);
@@ -80,7 +86,7 @@ int	init_program(t_program *data, char **argv);
 int monitoring(t_program *data, t_philo *philo);
 
 /*clean all*/
-void clean_all(t_program *data, t_philo *philo);
+int clean_all(t_program *data, t_philo *philo);
 int clean_philo(t_program *data, t_philo *philo);
 int clean_program(t_program *data);
 #endif
