@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 08:19:34 by alli              #+#    #+#             */
-/*   Updated: 2024/07/15 12:53:34 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/15 18:03:16 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,41 +28,66 @@ int	init_data_mutexes(t_program *data)
 	}
 	if (pthread_mutex_init(&data->eating_lock, NULL))
 		return (1);
+	printf("philo_mutex 4\n");
+	if (pthread_mutex_init(&data->print_lock, NULL))
+		return (1);
+	printf("philo_mutex 5\n");
+	if (pthread_mutex_init(&data->death_lock, NULL))
+		return (1);
 	return (0);
 }
 
-int	init_philo_mutexes(t_philo *philo)
-{
-	if (pthread_mutex_init(philo->l_fork, NULL))// do I need to initialize these forks?
-		return (1);
-	if (pthread_mutex_init(philo->r_fork, NULL))
-		return (1);
-	if (pthread_mutex_init(&philo->sleep_lock, NULL))
-		return (1);
-	if (pthread_mutex_init(&philo->data->print_lock, NULL))
-		return (1);
-	if (pthread_mutex_init(&philo->data->death_lock, NULL))
-		return (1);
-}
+// int	init_philo_mutexes(t_philo *philo)
+// {
+// 	// printf("philo_mutex 1\n");
+// 	// if (pthread_mutex_init(philo->l_fork, NULL))// do I need to initialize these forks?
+// 	// 	return (1);
+// 	// printf("philo_mutex 2\n");
+// 	// if (pthread_mutex_init(philo->r_fork, NULL))
+// 	// 	return (1);
+// 	printf("philo_mutex 3\n");
+// 	if (pthread_mutex_init(&philo->sleep_lock, NULL))
+// 		return (1);
+// 	return (0);
+// }
 
-int	init_program(t_program *data, char **argv)
+int	init_program(t_program *data, char **argv, int argc)
 {
 	int	i;
 
 	i = 0;
+	
 	if (!argv)
 		return (1);
+	//printf("before init\n");
 	data->start_time = get_current_time();
-	data->philo_n = ft_atoi(argv[1]);
-	data->time_to_die = ft_atoi(argv[2]);
-	data->time_to_eat = ft_atoi(argv[3]);
-	data->time_to_sleep = ft_atoi(argv[4]);
-	if (argv[5])
-		data->meals_to_eat = ft_atoi(argv[5]);
+	// printf("data->start_time %zu", data->start_time);
+	//printf("philo_n %zu \n", ft_atol(argv[1]));
+	data->philo_n = ft_atol(argv[1]);
+	//printf("data->philo_n %d\n", data->philo_n);
+	data->time_to_die = ft_atol(argv[2]);
+	//printf("init 3\n");
+	data->time_to_eat = ft_atol(argv[3]);
+	//printf("init 4\n");
+	data->time_to_sleep = ft_atol(argv[4]);
+	//printf("init 5\n");
+	if (argc > 5)
+	{
+		data->meals_to_eat = ft_atol(argv[5]);
+		//printf("init arv[5] \n");
+	}
+	//printf("init 6\n");
 	data->dead_philo_flag = false;
+	//printf("init 7\n");
 	data->everyone_full_flag = false;
+	//rintf("init 8\n");
 	if (init_data_mutexes(data))
+	{
+		//printf("in data mutexes\n");
 		return (1);
+	}
+	//printf("init 9\n");
+	// printf("finished init_philo\n");
 	return (0);
 }
 
@@ -70,24 +95,28 @@ int	init_philo(t_philo	*philo, t_program *data)
 {
 	int	i;
 
-	i = 1;//index starts from 1
-	philo = malloc(sizeof(t_philo) * data->philo_n);
-	if (!philo)
-		return (1);
-	while (i <= data->philo_n)
+	i = 0;//index starts from 1
+	// philo = malloc(sizeof(t_philo) * data->philo_n);
+	// if (!philo)
+	// 	return (1);
+	while (i < data->philo_n)
 	{
 		philo[i].philo_index = i;
 		philo[i].data = data;
 		philo[i].n_philo_full = false;
 		philo[i].num_meals_eaten = 0;
         philo[i].last_meal_time = data->start_time;
+		printf("philo %d start time %lu\n", i, philo[i].last_meal_time);
         philo[i].all_meals_eaten = false;
 		philo[i].r_fork = &data->forks[i];
 		if (i == (data->philo_n - 1))
-			philo[i].l_fork = &data->forks[1];
+			philo[i].l_fork = &data->forks[0];
 		else
 			philo[i].l_fork = &data->forks[i + 1];
-		if (init_philo_mutexes(philo))
-			return (1);
+		// if (init_philo_mutexes(philo))
+		// 	return (1);
+		i++;
 	}
+	//printf("finished init_philo\n");
+	return (0);
 }

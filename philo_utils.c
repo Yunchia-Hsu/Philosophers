@@ -6,30 +6,49 @@
 /*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 08:18:41 by alli              #+#    #+#             */
-/*   Updated: 2024/07/15 12:57:29 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/15 16:54:19 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void ft_usleep(long millisecond)
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+void ft_usleep(size_t millisecond)
 {
 	size_t start;
-	size_t relapse;
 	
 	start = get_current_time();
-	relapse = get_current_time() - start;
-	while (relapse < millisecond)
+	while ((get_current_time() - start) < millisecond)
 		usleep(500);//可以讓操作系統有機會調度其他任務
 }
 
-size_t get_current_time(void)
-{
-	struct timeval time;
+// size_t get_current_time(void)
+// {
+// 	struct timeval time;
 	
+// 	printf("entered get_current_time\n");
+// 	if (gettimeofday(&time, NULL) == -1)
+// 		ft_putstr_fd("Error: getimeof day failed\n", 2);
+// 	printf("time %zu\n", time.tv_usec * 1000 + time.tv_usec / 1000);
+// 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+// }
+
+size_t	get_current_time(void)
+{
+	struct timeval	time;
+
 	if (gettimeofday(&time, NULL) == -1)
-		ft_putstr_fd("Error: getimeof day failed\n", 2);	
-	return (time.tv_usec * 1000 + time.tv_usec / 1000);
+		printf("Error: gettimeofday\n");
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 // int	safe_mutex_lock(pthread_mutex_t *str)
 // {

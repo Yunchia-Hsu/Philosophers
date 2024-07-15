@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 08:18:33 by alli              #+#    #+#             */
-/*   Updated: 2024/07/15 12:59:58 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/15 15:23:11 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include <sys/time.h>
 # include <stdbool.h>
 
-struct timeval	time;
+typedef struct timeval	t_timeval;
 
 typedef struct s_program
 {
@@ -40,7 +40,7 @@ typedef struct s_program
 	int		meals_to_eat; //# of meals 6th argument
 	bool	dead_philo_flag;// if one philois dead, it turns true
 	bool	everyone_full_flag;
-	pthread_t	*philo_thread;
+	
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_lock; //only 1 philosopher can print at a time
 	pthread_mutex_t	death_lock; //only 1 death
@@ -57,20 +57,21 @@ typedef struct s_philo
 	long	last_meal_time;
 	int		num_meals_eaten;
 	bool		all_meals_eaten;
-    pthread_mutex_t *l_fork;
+    pthread_t	philo_thread;
+	pthread_mutex_t *l_fork;
 	pthread_mutex_t	*r_fork;
-	pthread_mutex_t	sleep_lock;
+	pthread_mutex_t	sleep_lock; //might be unnecessary
 } t_philo;
 
 /*philosopher utilities*/
 long	ft_atol(const char *str);
-int	ft_isdigit(char *str);
+int	ft_isdigit(int c);
 int	ft_putstr_fd(char *s, int fd);
-void ft_usleep(long millisecond);
+void ft_usleep(size_t millisecond);
 size_t get_current_time(void);
 
 /*philo routine*/
-void	philo_routine(void *ptr);
+void	*philo_routine(void *ptr);
 
 /*dead or finished check*/
 int	dead_or_finished(t_philo *philo);
@@ -80,10 +81,18 @@ int	finished_meals(t_philo *philo);
 
 /*initializing*/
 int	init_philo(t_philo	*philo, t_program *data);
-int	init_program(t_program *data, char **argv);
+int	init_program(t_program *data, char **argv, int argc);
+
+/*printing*/
+void print_action(t_philo *philo, char *str);
+void print_death(t_philo *philo);
 
 /*monitoring*/
-int monitoring(t_program *data, t_philo *philo);
+//void monitoring(void *data, void *philo);
+void *monitoring(void *arg);
+int meal_check(t_program *data, t_philo *philo);
+int death_check(t_program *data, t_philo *philo);
+
 
 /*clean all*/
 int clean_all(t_program *data, t_philo *philo);

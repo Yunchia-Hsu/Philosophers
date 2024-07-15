@@ -9,7 +9,7 @@ int validate_input(int argc, char **argv)
 
     if (argc != 5 && argc != 6)
     {
-        ft_purstr_fd("invalid number of arguments", 2);
+        ft_putstr_fd("invalid number of arguments", 2);
         return (1);
     }
     i = 1;
@@ -80,17 +80,18 @@ int thread_join(pthread_t *monitor, t_philo *philo)
     int i;
 
     i = 0;
-    if (pthread_join(monitor, NULL))
+    if (pthread_join(*monitor, NULL) != 0)
     {
         ft_putstr_fd("Error: monitor_join falied\n", 2);
-        return (free_threads());
+        return (clean_all(philo->data, philo));
     }
     while(i < philo->data->philo_n)
     {
-        if (pthread_join(philo->data->philo_thread[i], NULL))
+        // printf("philo %d in join\n", i);
+		if (pthread_join(philo[i].philo_thread, NULL) != 0)
         {
             ft_putstr_fd("Error: philo_join falied\n", 2);
-            return (free_threads());
+            return (clean_all(philo->data, philo));
         }
         i++;
     }
@@ -98,7 +99,7 @@ int thread_join(pthread_t *monitor, t_philo *philo)
 }
 
 
-int init_threads(t_philo *philo, t_program *data, char **argv)
+int init_threads(t_philo *philo, t_program *data)
 {
     pthread_t monitor;
     int i;
@@ -106,54 +107,76 @@ int init_threads(t_philo *philo, t_program *data, char **argv)
     i = 0;
     if (pthread_create(&monitor, NULL, &monitoring, philo))//philo is the argument for thread
     {
-        ft_putstr_fd("Error: monitoring thread_creat failed\n", 2);
+        
+		ft_putstr_fd("Error: monitoring thread_creat failed\n", 2);
         return (1);
     }
-   while(i < philo->data->philo_n)
+	
+   while (i < data->philo_n)
    {
-       philo->data->philo_thread[i] = malloc(1 * sizeof(pthread_t));
-       if (!philo->data->philo_thread[i])
-       {
-            ft_putstr_fd("Error: malloc\n", 2);
-            return (free_threads());
-       }
-        if (pthread_create(&philo->data->philo_thread[i], NULL, &philo_routine, philo))
+       
+	   //data->philo_thread[i] = (unsigned long)malloc(sizeof(pthread_t));
+       
+
+	//if (!philo->data->philo_thread[i])
+    //    {
+    //        printf("thread.6\n");
+	// 	    ft_putstr_fd("Error: malloc\n", 2);
+    //         return (clean_all(data, philo));
+    //    }
+	 
+        if (pthread_create(&philo[i].philo_thread, NULL, &philo_routine, &philo[i]))
         {
             ft_putstr_fd("Error: philo thread_create failed\n", 2);
-            return (free_threads());
+            return (clean_all(data, philo));
         }
+		
       i++;  
    }
-    if (thread_join(monitor, philo))
+
+    
+	if (thread_join(&monitor, philo) != 0)
         return (1);
-    return (0);
+	
+    
+	return (0);
 }
 
 
 int	main(int argc, char **argv)
 {
 	t_philo	*philo;
-	t_program	*data;
+	t_program	data;
 	
     if (validate_input(argc, argv))
+    {
+		return (1);
+	}
+	//printf("enters init_program0\n");
+	if (init_program(&data, argv, argc))
+	{
+		printf("something's wrong\n");
+		return (clean_program(&data));
+	}	
+	philo = malloc(data.philo_n * sizeof(t_philo));
+	if (!philo)
+        return (clean_program(&data));
+    if (init_philo(philo, &data)) //this should be what kind of &data each philosopher carries
+		return (clean_program(&data));
+		//return (clean_all(&data, philo));
+    //printf("test0\n");
+    
+	if (init_threads(philo, &data))
+        return(clean_all(&data, philo));
+    
+	//printf("test1\n");
+    
+	if (clean_all(&data, philo))
         return (1);
-	// if (check_args(argc, argv))
-	// 	return (1);//error printed
-	if (init_program(data, argv)) //this is a shared resource for all the philosophers should be program
-		return (clean_program(data));
 	
-    philo = malloc(data->philo_n * sizeof(t_philo));
-    if (!philo)
-        return (clean_program(data));
-    if (init_philo(philo, argv)) //this should be what kind of data each philosopher carries
-		return (clean_all(data, philo));
+	//printf("test2\n");
     
-    if (init_threads(philo, data, argv))
-        return(clean_all(data, philo));
-    
-    if (clean_all(data, argv))
-        return (1);
-    return (0);
+	return (0);
 }
 
 
