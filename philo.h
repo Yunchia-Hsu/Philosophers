@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 08:18:33 by alli              #+#    #+#             */
-/*   Updated: 2024/07/16 11:11:31 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/16 14:58:57 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ typedef struct s_program
 	long long	time_to_sleep;
 	int		meals_to_eat; //# of meals 6th argument
 	bool	dead_philo_flag;// if one philois dead, it turns true
-	bool	everyone_full_flag;	
+	bool	everyone_full_flag;
+	bool	can_write;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_lock; //only 1 philosopher can print at a time
 	pthread_mutex_t	death_lock; //only 1 death
@@ -92,10 +93,11 @@ void print_death(t_philo *philo);
 void *monitoring(void *arg);
 int meal_check(t_program *data, t_philo *philo);
 int death_check(t_program *data, t_philo *philo);
+int check_death_flag(t_program *data);
 
 
 /*clean all*/
 int clean_all(t_program *data, t_philo *philo);
-int clean_philo(t_program *data, t_philo *philo);
+// int clean_philo(t_program *data, t_philo *philo);
 int clean_program(t_program *data);
 #endif

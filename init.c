@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 08:19:34 by alli              #+#    #+#             */
-/*   Updated: 2024/07/16 12:16:24 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/16 14:45:48 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	init_data_mutexes(t_program *data)
 		return (1);
 	if (pthread_mutex_init(&data->death_lock, NULL))
 		return (1);
+	printf("finished init data mutexes\n");
 	return (0);
 }
 
@@ -64,11 +65,8 @@ int	init_program(t_program *data, char **argv, int argc)
 	data->philo_n = ft_atol(argv[1]);
 	//printf("data->philo_n %d\n", data->philo_n);
 	data->time_to_die = ft_atol(argv[2]);
-	//printf("init 3\n");
 	data->time_to_eat = ft_atol(argv[3]);
-	printf("time_to_eat %lu\n", data->time_to_eat);
 	data->time_to_sleep = ft_atol(argv[4]);
-	printf("time_to_eat %lu\n", data->time_to_sleep);
 	if (argc > 5)
 	{
 		data->meals_to_eat = ft_atol(argv[5]);
@@ -78,6 +76,7 @@ int	init_program(t_program *data, char **argv, int argc)
 	data->dead_philo_flag = false;
 	//printf("init 7\n");
 	data->everyone_full_flag = false;
+	data->can_write = true;
 	//rintf("init 8\n");
 	if (init_data_mutexes(data))
 	{
@@ -93,18 +92,14 @@ int	init_philo(t_philo	*philo, t_program *data)
 {
 	int	i;
 
-	i = 0;//index starts from 1
-	// philo = malloc(sizeof(t_philo) * data->philo_n);
-	// if (!philo)
-	// 	return (1);
+	i = 0;
 	while (i < data->philo_n)
 	{
-		philo[i].philo_index = i;
 		philo[i].data = data;
+		philo[i].philo_index = i;
 		philo[i].n_philo_full = false;
 		philo[i].num_meals_eaten = 0;
         philo[i].last_meal_time = get_current_time();
-		printf("philo %d start time %lld\n", i, philo[i].last_meal_time);
         philo[i].all_meals_eaten = false;
 		philo[i].r_fork = &data->forks[i];
 		if (i == (data->philo_n - 1))
@@ -118,6 +113,6 @@ int	init_philo(t_philo	*philo, t_program *data)
 			return (1);
 		}
 	}
-	//printf("finished init_philo\n");
+	printf("finished init philo mutexes\n");
 	return (0);
 }

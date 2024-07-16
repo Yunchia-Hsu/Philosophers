@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 08:19:07 by alli              #+#    #+#             */
-/*   Updated: 2024/07/16 11:58:43 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/16 15:38:53 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ int hungery_to_die(t_program *data, t_philo *philo)
     elapse = get_current_time() - philo->last_meal_time;
     if (elapse >= data->time_to_die)
     {
-		printf("elapse vs time_to_die %lld %lld \n", elapse, data->time_to_die);
-        printf("philo %d \n", philo->philo_index);
-		printf("get_current_time() %lld \n", get_current_time());
-		printf("philo->last_meal_time %lld \n", philo->last_meal_time);
-		printf("elapse %lld \n", elapse);
-		printf("data->time_to_die %lld \n", data->time_to_die);
-		printf("hungry4\n");
+		// printf("elapse vs time_to_die %lld %lld \n", elapse, data->time_to_die);
+        // printf("philo %d \n", philo->philo_index);
+		// printf("get_current_time() %lld \n", get_current_time());
+		// printf("philo->last_meal_time %lld \n", philo->last_meal_time);
+		// printf("elapse %lld \n", elapse);
+		// printf("data->time_to_die %lld \n", data->time_to_die);
+		// printf("hungry4\n");
 		data->dead_philo_flag = 1;
 		print_death(philo);
         pthread_mutex_unlock(&data->eating_lock);
@@ -108,15 +108,15 @@ int meal_check(t_program *data, t_philo *philo)// check if anyone is full
     i = 0;
 	while(i < data->philo_n)
     { 
-        pthread_mutex_lock(&data->eating_lock);
+        pthread_mutex_lock(&philo[i].meal_lock);
         if (philo[i].num_meals_eaten < data->meals_to_eat)// philo not full yet
         {
             // printf("in mealcheck\n");
-			pthread_mutex_unlock(&data->eating_lock);
+			pthread_mutex_unlock(&philo[i].meal_lock);
             return (0);
         } 
         philo[i].all_meals_eaten = true;
-        pthread_mutex_unlock(&data->eating_lock);
+        pthread_mutex_unlock(&philo[i].meal_lock);
         i++;
     }
 	
@@ -124,7 +124,7 @@ int meal_check(t_program *data, t_philo *philo)// check if anyone is full
     pthread_mutex_lock(&data->eating_lock);
     data->everyone_full_flag = true;
     pthread_mutex_unlock(&data->eating_lock);
-	// printf("in mealcheck 0\n");
+	printf("return 1 mealcheck\n");
     return (1);
 }
 
@@ -138,7 +138,10 @@ void *monitoring(void *arg)
         if (meal_check(philo->data, philo) || death_check(philo->data, philo))
             break;
     }
+	// pthread_mutex_lock(&philo->data->print_lock);
+	// philo->data->can_write = false;
+	// pthread_mutex_unlock(&philo->data->print_lock);
 	// printf("philo_dead_flag = %d\n", philo->data->dead_philo_flag);
-	// printf("broke monitoring loop\n");
+	printf("broke monitoring loop\n");
     return (NULL);
 } 

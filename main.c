@@ -75,12 +75,12 @@ int validate_input(int argc, char **argv)
 
 
 
-int thread_join(pthread_t *monitor, t_philo *philo)
+int thread_join(pthread_t monitor, t_philo *philo)
 {
     int i;
 
     i = 0;
-    if (pthread_join(*monitor, NULL) != 0)
+    if (pthread_join(monitor, NULL) != 0)
     {
         ft_putstr_fd("Error: monitor_join falied\n", 2);
         return (clean_all(philo->data, philo));
@@ -133,8 +133,7 @@ int init_threads(t_philo *philo, t_program *data)
 		
       i++;  
    }
-	printf("philo_n %d \n", data->philo_n);
-	if (thread_join(&monitor, philo) != 0)
+	if (thread_join(monitor, philo) != 0)
         return (1);
 	return (0);
 }
