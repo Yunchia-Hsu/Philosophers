@@ -60,7 +60,7 @@ typedef struct s_philo
     pthread_t	philo_thread;
 	pthread_mutex_t *l_fork;
 	pthread_mutex_t	*r_fork;
-	pthread_mutex_t	meal_lock; //might be unnecessary
+	pthread_mutex_t	meal_lock; //might be unnecessary  used in routine and monitoring
 } t_philo;
 
 /*philosopher utilities*/

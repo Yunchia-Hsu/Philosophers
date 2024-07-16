@@ -176,46 +176,4 @@ int	main(int argc, char **argv)
 }
 
 
-
-     
-
-
-/*
-./philo 5人 800死 200吃 200睡覺 
-int main(int argc, char *argv[])
-{
-    //number_of_philosophers time_to_die time_to_eat time_to_sleep
-    t_program data;
-
-    //valid input  The number of philosophers , The time a philosopher will die if he doesn’t eat , The time it takes a philosopher to eat , The time it takes a philosopher to sleep   > 0   philo < 200
-    if (validate_input(argc, argv))
-        return (1);
-    
-    if (init_program(&data, argv))
-        return (1);
-    
-     
-    threads();
-    run threads: 
-    1. create philo and check threads and run routine ; every philo is a thread  create threads
-    2. monitor- if die thread 
-    3. monitor-if full thread
-    4.threads join 
-    
-    monitor die 
-
-     monitor full
-
-    
-    return (0);
-}
-*/
-
-/*
-log:
-◦ timestamp_in_ms X has taken a fork
-◦ timestamp_in_ms X is eating
-◦ timestamp_in_ms X is sleeping
-◦ timestamp_in_ms X is thinking
-◦ timestamp_in_ms X died
-*/
+//./philo 5人 800死 200吃 200睡覺 

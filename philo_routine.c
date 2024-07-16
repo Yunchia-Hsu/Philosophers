@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:12:13 by alli              #+#    #+#             */
-/*   Updated: 2024/07/16 15:55:20 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/16 16:40:25 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ int	finished_meals(t_philo *philo)
 	if (philo->num_meals_eaten == philo->data->meals_to_eat)
 	{
 		//printf("philo is full\n");
-		pthread_mutex_unlock(&philo->data->eating_lock);
+		
 		philo->all_meals_eaten = true;
+		pthread_mutex_unlock(&philo->data->eating_lock);
 		return (1);
 	}
 	pthread_mutex_unlock(&philo->data->eating_lock);
@@ -31,7 +32,6 @@ int	finished_meals(t_philo *philo)
 
 int	dead_or_finished(t_philo *philo)
 {
-	
 	am_i_full(philo);
 	if (check_death_flag(philo->data) || finished_meals(philo))
 	{
@@ -44,8 +44,9 @@ int	dead_or_finished(t_philo *philo)
 
 int	die_alone(t_philo *philo)
 {
-	pthread_mutex_unlock(philo->r_fork);
+	
 	ft_usleep(philo->data->time_to_die);
+	pthread_mutex_unlock(philo->r_fork);
 	return (1);
 }
 
@@ -68,7 +69,7 @@ static int	eat(t_philo *philo)
 	}
 	print_action(philo, "is eating\n");
 	philo->last_meal_time = get_current_time();
-	// printf("new last meal time %lld\n", philo->last_meal_time);
+
 	if (philo->data->meals_to_eat)
 		philo->num_meals_eaten++;
 	ft_usleep(philo->data->time_to_eat);
