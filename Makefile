@@ -47,8 +47,9 @@ NAME := philo
 
 CC := cc
 
-# -fsanitize=thread
-CFLAGS := -Wall -Werror -Wextra 
+# -g -fsanitize=thread
+CFLAGS := -Wall -Werror -Wextra
+
 
 BLUE = \033[0;34m
 YELLOW := \033[0;33m

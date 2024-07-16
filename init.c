@@ -17,7 +17,7 @@ int	init_data_mutexes(t_program *data)
 	int	i;
 
 	i = 0;
-	data->forks = malloc(sizeof(t_program) * data->philo_n);
+	data->forks = malloc(sizeof(pthread_mutex_t) * data->philo_n);
 	if (!data->forks)
 		return (1); //exit?
 	while (i < data->philo_n)
@@ -70,10 +70,13 @@ int	init_program(t_program *data, char **argv, int argc)
 		data->meals_to_eat = ft_atol(argv[5]);
 		//printf("init arv[5] \n");
 	}
+	else
+		data->meals_to_eat = -1;
 	//printf("init 6\n");
 	data->dead_philo_flag = false;
 	//printf("init 7\n");
 	data->everyone_full_flag = false;
+	data->can_write = true;
 	// data->can_write = true;
 	//rintf("init 8\n");
 	if (init_data_mutexes(data))
