@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 08:18:41 by alli              #+#    #+#             */
-/*   Updated: 2024/07/15 16:54:19 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/16 10:55:40 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-void ft_usleep(size_t millisecond)
+void ft_usleep(long long millisecond)
 {
-	size_t start;
+	long long start;
 	
 	start = get_current_time();
 	while ((get_current_time() - start) < millisecond)
@@ -42,13 +42,13 @@ void ft_usleep(size_t millisecond)
 // 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 // }
 
-size_t	get_current_time(void)
+long long	get_current_time(void)
 {
 	struct timeval	time;
 
 	if (gettimeofday(&time, NULL) == -1)
 		printf("Error: gettimeofday\n");
-	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+	return ((long long)time.tv_sec * 1000 + (long long)time.tv_usec / 1000);
 }
 // int	safe_mutex_lock(pthread_mutex_t *str)
 // {

@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:12:13 by alli              #+#    #+#             */
-/*   Updated: 2024/07/15 18:00:06 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/16 12:13:08 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,23 @@ int	finished_meals(t_philo *philo)
 
 int	starvation_check(t_philo *philo)
 {
-	long	elapsed_time;
+	long long	elapsed_time;
 
 	//printf("am I starving?\n");
-	pthread_mutex_lock(&philo->data->death_lock);
-	//pthread_mutex_lock(&philo->data->eating_lock);
+	// pthread_mutex_lock(&philo->data->death_lock);
+	pthread_mutex_lock(&philo->data->eating_lock);
 	elapsed_time = get_current_time() - philo->last_meal_time;
 	if (elapsed_time >= philo->data->time_to_eat)
 	{
-		pthread_mutex_unlock(&philo->data->death_lock);
+		// pthread_mutex_unlock(&philo->data->death_lock);
+		pthread_mutex_unlock(&philo->data->eating_lock);
 		philo->data->dead_philo_flag = true;
 		//philo->data->dead_philo_flag = true or a dead philosopher function
 		return (1);
 	}
 	//printf("philo %d not starving\n", philo->philo_index);
-	pthread_mutex_unlock(&philo->data->death_lock);
+	pthread_mutex_unlock(&philo->data->eating_lock);
+	// pthread_mutex_unlock(&philo->data->death_lock);
 	return (0);
 }
 
@@ -63,38 +65,45 @@ int	dead_or_finished(t_philo *philo)
 
 int	die_alone(t_philo *philo)
 {
+	pthread_mutex_unlock(philo->r_fork);
 	ft_usleep(philo->data->time_to_die);
 	return (1);
 }
 
 static int	eat(t_philo *philo)
 {
+	printf("%d, time_to_eat %lld\n", philo->philo_index, philo->data->time_to_eat);
+	if (am_i_full(philo))
+		return (1);
 	pthread_mutex_lock(philo->r_fork);
 	print_action(philo, "has taken right fork\n");
 	//printf("philo %d entered eat 1\n",philo->philo_index);
-	if (dead_or_finished(philo))
-	{
-		pthread_mutex_unlock(philo->r_fork);
-		return (1);
-	}
+	
 	if (philo->data->philo_n == 1) //check if it's a single philo
 		return (die_alone(philo));
 	pthread_mutex_lock(philo->l_fork);
 	print_action(philo, "has taken left fork\n");
-	// pthread_mutex_lock(&philo->data->eating_lock);
+	if (dead_or_finished(philo))
+	{
+		pthread_mutex_unlock(philo->r_fork);
+		pthread_mutex_unlock(philo->l_fork);
+		return (1);
+	}
 	//printf("philo %d should be eating\n", philo->philo_index);
+	pthread_mutex_lock(&philo->meal_lock);
 	print_action(philo, "is eating\n");
 	philo->last_meal_time = get_current_time();
-	
+	// printf("new last meal time %lld\n", philo->last_meal_time);
 	if (philo->data->meals_to_eat)
 		philo->num_meals_eaten++;
-	ft_usleep(philo->data->time_to_eat);
-	//printf("philo %d finished eating\n", philo->philo_index);
+	ft_usleep(philo->data->time_to_eat / 1000);
+	printf("philo %d finished eating\n", philo->philo_index);
 	pthread_mutex_unlock(philo->l_fork);
 	//printf("philo %d unlocked l_fork\n", philo->philo_index);
 	pthread_mutex_unlock(philo->r_fork);
 	//printf("philo %d unlocked r_fork\n", philo->philo_index);
-	// pthread_mutex_unlock(&philo->data->eating_lock);
+	pthread_mutex_unlock(&philo->meal_lock);
+	printf("%d finished eating\n", philo->philo_index);
 	return (0);
 }
 
@@ -127,7 +136,7 @@ void	*philo_routine(void *ptr)
 	philo = (t_philo *)ptr;
 	
 	if (philo->philo_index % 2 == 0)
-		ft_usleep(philo->data->time_to_eat);
+		ft_usleep(50);
 	while (!dead_or_finished(philo))
 	{
 		//printf("philo %d is in routine\n", philo->philo_index);

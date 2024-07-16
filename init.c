@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 08:19:34 by alli              #+#    #+#             */
-/*   Updated: 2024/07/15 18:03:16 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/16 12:16:24 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,8 @@ int	init_data_mutexes(t_program *data)
 	}
 	if (pthread_mutex_init(&data->eating_lock, NULL))
 		return (1);
-	printf("philo_mutex 4\n");
 	if (pthread_mutex_init(&data->print_lock, NULL))
 		return (1);
-	printf("philo_mutex 5\n");
 	if (pthread_mutex_init(&data->death_lock, NULL))
 		return (1);
 	return (0);
@@ -68,9 +66,9 @@ int	init_program(t_program *data, char **argv, int argc)
 	data->time_to_die = ft_atol(argv[2]);
 	//printf("init 3\n");
 	data->time_to_eat = ft_atol(argv[3]);
-	//printf("init 4\n");
+	printf("time_to_eat %lu\n", data->time_to_eat);
 	data->time_to_sleep = ft_atol(argv[4]);
-	//printf("init 5\n");
+	printf("time_to_eat %lu\n", data->time_to_sleep);
 	if (argc > 5)
 	{
 		data->meals_to_eat = ft_atol(argv[5]);
@@ -105,17 +103,20 @@ int	init_philo(t_philo	*philo, t_program *data)
 		philo[i].data = data;
 		philo[i].n_philo_full = false;
 		philo[i].num_meals_eaten = 0;
-        philo[i].last_meal_time = data->start_time;
-		printf("philo %d start time %lu\n", i, philo[i].last_meal_time);
+        philo[i].last_meal_time = get_current_time();
+		printf("philo %d start time %lld\n", i, philo[i].last_meal_time);
         philo[i].all_meals_eaten = false;
 		philo[i].r_fork = &data->forks[i];
 		if (i == (data->philo_n - 1))
 			philo[i].l_fork = &data->forks[0];
 		else
 			philo[i].l_fork = &data->forks[i + 1];
-		// if (init_philo_mutexes(philo))
-		// 	return (1);
 		i++;
+		if (pthread_mutex_init(&philo[i].meal_lock, NULL))
+		{
+			clean_all(data, philo);
+			return (1);
+		}
 	}
 	//printf("finished init_philo\n");
 	return (0);

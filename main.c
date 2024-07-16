@@ -133,12 +133,9 @@ int init_threads(t_philo *philo, t_program *data)
 		
       i++;  
    }
-
-    
+	printf("philo_n %d \n", data->philo_n);
 	if (thread_join(&monitor, philo) != 0)
         return (1);
-	
-    
 	return (0);
 }
 

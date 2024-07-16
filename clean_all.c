@@ -14,7 +14,7 @@ int clean_program(t_program *data)
     pthread_mutex_destroy(&data->eating_lock);
     pthread_mutex_destroy(&data->print_lock);
     pthread_mutex_destroy(&data->death_lock);
-    while (i < data->philo_n)
+    while (i < data->philo_n) // if it only init 3/5 fork, should protect
         pthread_mutex_destroy(&data->forks[i++]);
     free(data->forks);
     data->forks = NULL;
@@ -33,7 +33,7 @@ int clean_philo(t_program *data, t_philo *philo)
     }
     while (i < data->philo_n)
     {
-        pthread_mutex_destroy(&philo[i++].sleep_lock);//destroy every philo's meal lock
+        pthread_mutex_destroy(&philo[i++].meal_lock);//destroy every philo's meal lock
     }
     return (0);
 }

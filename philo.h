@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 08:18:33 by alli              #+#    #+#             */
-/*   Updated: 2024/07/15 15:23:11 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/16 11:11:31 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,13 @@ typedef struct timeval	t_timeval;
 typedef struct s_program
 {
     int 	philo_n;
-	size_t	start_time;
-	long	time_to_eat;
-	long	time_to_die;
-	long	time_to_sleep;
+	long long	start_time;
+	long long	time_to_eat;
+	long long	time_to_die;
+	long long	time_to_sleep;
 	int		meals_to_eat; //# of meals 6th argument
 	bool	dead_philo_flag;// if one philois dead, it turns true
-	bool	everyone_full_flag;
-	
+	bool	everyone_full_flag;	
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_lock; //only 1 philosopher can print at a time
 	pthread_mutex_t	death_lock; //only 1 death
@@ -54,24 +53,25 @@ typedef struct s_philo
     t_program	*data;
 	bool 	n_philo_full;//philo[index] is fill
 	int		philo_index;//index starts from 1
-	long	last_meal_time;
+	long long	last_meal_time;
 	int		num_meals_eaten;
 	bool		all_meals_eaten;
     pthread_t	philo_thread;
 	pthread_mutex_t *l_fork;
 	pthread_mutex_t	*r_fork;
-	pthread_mutex_t	sleep_lock; //might be unnecessary
+	pthread_mutex_t	meal_lock; //might be unnecessary
 } t_philo;
 
 /*philosopher utilities*/
 long	ft_atol(const char *str);
 int	ft_isdigit(int c);
 int	ft_putstr_fd(char *s, int fd);
-void ft_usleep(size_t millisecond);
-size_t get_current_time(void);
+void ft_usleep(long long millisecond);
+long long get_current_time(void);
 
 /*philo routine*/
 void	*philo_routine(void *ptr);
+int	am_i_full(t_philo *philo);
 
 /*dead or finished check*/
 int	dead_or_finished(t_philo *philo);
