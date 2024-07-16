@@ -51,9 +51,8 @@ int	init_data_mutexes(t_program *data)
 
 int	init_program(t_program *data, char **argv, int argc)
 {
-	int	i;
-
-	i = 0;
+	//int	i;
+	//i = 0;
 	
 	if (!argv)
 		return (1);
@@ -66,9 +65,9 @@ int	init_program(t_program *data, char **argv, int argc)
 	data->time_to_die = ft_atol(argv[2]);
 	//printf("init 3\n");
 	data->time_to_eat = ft_atol(argv[3]);
-	printf("time_to_eat %lu\n", data->time_to_eat);
+	//printf("time_to_eat %lld\n", data->time_to_eat);
 	data->time_to_sleep = ft_atol(argv[4]);
-	printf("time_to_eat %lu\n", data->time_to_sleep);
+	//printf("time_to_eat %lld\n", data->time_to_sleep);
 	if (argc > 5)
 	{
 		data->meals_to_eat = ft_atol(argv[5]);
@@ -104,7 +103,7 @@ int	init_philo(t_philo	*philo, t_program *data)
 		philo[i].n_philo_full = false;
 		philo[i].num_meals_eaten = 0;
         philo[i].last_meal_time = get_current_time();
-		printf("philo %d start time %lld\n", i, philo[i].last_meal_time);
+		//printf("philo %d start time %lld\n", i, philo[i].last_meal_time);
         philo[i].all_meals_eaten = false;
 		philo[i].r_fork = &data->forks[i];
 		if (i == (data->philo_n - 1))

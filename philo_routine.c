@@ -20,8 +20,9 @@ int	finished_meals(t_philo *philo)
 	if (philo->num_meals_eaten == philo->data->meals_to_eat)
 	{
 		//printf("philo is full\n");
-		pthread_mutex_unlock(&philo->data->eating_lock);
+		
 		philo->all_meals_eaten = true;
+		pthread_mutex_unlock(&philo->data->eating_lock);
 		return (1);
 	}
 	pthread_mutex_unlock(&philo->data->eating_lock);
@@ -29,26 +30,38 @@ int	finished_meals(t_philo *philo)
 	return (0);
 }
 
+// int	starvation_check(t_philo *philo)
+// {
+// 	long long	elapsed_time;
+
+// 	//printf("am I starving?\n");
+// 	pthread_mutex_lock(&philo->data->death_lock);
+// 	//pthread_mutex_lock(&philo->data->eating_lock);
+// 	elapsed_time = get_current_time() - philo->last_meal_time;
+// 	if (elapsed_time >= philo->data->time_to_eat)
+// 	{
+// 		pthread_mutex_unlock(&philo->data->death_lock);
+// 		pthread_mutex_unlock(&philo->data->eating_lock);
+// 		philo->data->dead_philo_flag = true;
+// 		//philo->data->dead_philo_flag = true or a dead philosopher function
+// 		return (1);
+// 	}
+// 	//printf("philo %d not starving\n", philo->philo_index);
+// 	pthread_mutex_unlock(&philo->data->eating_lock);
+// 	pthread_mutex_unlock(&philo->data->death_lock);
+// 	return (0);
+// }
+
 int	starvation_check(t_philo *philo)
 {
-	long long	elapsed_time;
-
-	//printf("am I starving?\n");
-	// pthread_mutex_lock(&philo->data->death_lock);
-	pthread_mutex_lock(&philo->data->eating_lock);
-	elapsed_time = get_current_time() - philo->last_meal_time;
-	if (elapsed_time >= philo->data->time_to_eat)
-	{
-		// pthread_mutex_unlock(&philo->data->death_lock);
-		pthread_mutex_unlock(&philo->data->eating_lock);
-		philo->data->dead_philo_flag = true;
-		//philo->data->dead_philo_flag = true or a dead philosopher function
-		return (1);
-	}
-	//printf("philo %d not starving\n", philo->philo_index);
-	pthread_mutex_unlock(&philo->data->eating_lock);
-	// pthread_mutex_unlock(&philo->data->death_lock);
-	return (0);
+	pthread_mutex_lock(&philo->data->death_lock);
+    if (philo->data->dead_philo_flag == true)
+    {
+        pthread_mutex_unlock(&philo->data->death_lock);
+        return (1);
+    }
+    pthread_mutex_unlock(&philo->data->death_lock);    
+    return (0);
 }
 
 int	dead_or_finished(t_philo *philo)
@@ -65,19 +78,19 @@ int	dead_or_finished(t_philo *philo)
 
 int	die_alone(t_philo *philo)
 {
-	pthread_mutex_unlock(philo->r_fork);
+	
 	ft_usleep(philo->data->time_to_die);
+	pthread_mutex_unlock(philo->r_fork);
 	return (1);
 }
 
 static int	eat(t_philo *philo)
 {
-	printf("%d, time_to_eat %lld\n", philo->philo_index, philo->data->time_to_eat);
+	//printf("%d, time_to_eat %lld\n", philo->philo_index, philo->data->time_to_eat);
 	if (am_i_full(philo))
 		return (1);
 	pthread_mutex_lock(philo->r_fork);
 	print_action(philo, "has taken right fork\n");
-	//printf("philo %d entered eat 1\n",philo->philo_index);
 	
 	if (philo->data->philo_n == 1) //check if it's a single philo
 		return (die_alone(philo));
@@ -89,21 +102,19 @@ static int	eat(t_philo *philo)
 		pthread_mutex_unlock(philo->l_fork);
 		return (1);
 	}
-	//printf("philo %d should be eating\n", philo->philo_index);
+
 	pthread_mutex_lock(&philo->meal_lock);
-	print_action(philo, "is eating\n");
+
 	philo->last_meal_time = get_current_time();
-	// printf("new last meal time %lld\n", philo->last_meal_time);
+
 	if (philo->data->meals_to_eat)
 		philo->num_meals_eaten++;
-	ft_usleep(philo->data->time_to_eat / 1000);
-	printf("philo %d finished eating\n", philo->philo_index);
-	pthread_mutex_unlock(philo->l_fork);
-	//printf("philo %d unlocked l_fork\n", philo->philo_index);
-	pthread_mutex_unlock(philo->r_fork);
-	//printf("philo %d unlocked r_fork\n", philo->philo_index);
+
 	pthread_mutex_unlock(&philo->meal_lock);
-	printf("%d finished eating\n", philo->philo_index);
+	ft_usleep(philo->data->time_to_eat);
+	pthread_mutex_unlock(philo->l_fork);
+	pthread_mutex_unlock(philo->r_fork);
+
 	return (0);
 }
 

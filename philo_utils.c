@@ -62,9 +62,6 @@ long long	get_current_time(void)
 
 int	ft_putstr_fd(char *s, int fd)
 {
-	size_t	i;
-
-	i = 0;
 	if (! s)
 	{
 		if (ft_putstr_fd("(null)", fd) == -1)
