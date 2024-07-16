@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 08:19:34 by alli              #+#    #+#             */
-/*   Updated: 2024/07/16 14:45:48 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/16 16:04:45 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	init_data_mutexes(t_program *data)
 		return (1);
 	if (pthread_mutex_init(&data->death_lock, NULL))
 		return (1);
-	printf("finished init data mutexes\n");
 	return (0);
 }
 
@@ -76,7 +75,7 @@ int	init_program(t_program *data, char **argv, int argc)
 	data->dead_philo_flag = false;
 	//printf("init 7\n");
 	data->everyone_full_flag = false;
-	data->can_write = true;
+	// data->can_write = true;
 	//rintf("init 8\n");
 	if (init_data_mutexes(data))
 	{
@@ -113,6 +112,5 @@ int	init_philo(t_philo	*philo, t_program *data)
 			return (1);
 		}
 	}
-	printf("finished init philo mutexes\n");
 	return (0);
 }

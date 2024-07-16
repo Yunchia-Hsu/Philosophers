@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 08:19:07 by alli              #+#    #+#             */
-/*   Updated: 2024/07/16 15:38:53 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/16 15:55:34 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,5 @@ void *monitoring(void *arg)
 	// philo->data->can_write = false;
 	// pthread_mutex_unlock(&philo->data->print_lock);
 	// printf("philo_dead_flag = %d\n", philo->data->dead_philo_flag);
-	printf("broke monitoring loop\n");
     return (NULL);
 } 
