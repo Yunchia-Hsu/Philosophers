@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 08:19:34 by alli              #+#    #+#             */
-/*   Updated: 2024/07/16 16:04:45 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/16 16:58:20 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	init_data_mutexes(t_program *data)
 	int	i;
 
 	i = 0;
-	data->forks = malloc(sizeof(t_program) * data->philo_n);
+	data->forks = malloc(sizeof(pthread_mutex_t) * data->philo_n);
 	if (!data->forks)
 		return (1); //exit?
 	while (i < data->philo_n)
