@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 08:19:34 by alli              #+#    #+#             */
-/*   Updated: 2024/07/16 16:36:20 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/17 13:50:35 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,6 @@ int	init_data_mutexes(t_program *data)
 		return (1);
 	return (0);
 }
-
-// int	init_philo_mutexes(t_philo *philo)
-// {
-// 	// printf("philo_mutex 1\n");
-// 	// if (pthread_mutex_init(philo->l_fork, NULL))// do I need to initialize these forks?
-// 	// 	return (1);
-// 	// printf("philo_mutex 2\n");
-// 	// if (pthread_mutex_init(philo->r_fork, NULL))
-// 	// 	return (1);
-// 	printf("philo_mutex 3\n");
-// 	if (pthread_mutex_init(&philo->sleep_lock, NULL))
-// 		return (1);
-// 	return (0);
-// }
 
 int	init_program(t_program *data, char **argv, int argc)
 {
@@ -108,11 +94,11 @@ int	init_philo(t_philo	*philo, t_program *data)
 		else
 			philo[i].l_fork = &data->forks[i + 1];
 		i++;
-		if (pthread_mutex_init(&philo[i].meal_lock, NULL))
-		{
-			clean_all(data, philo);
-			return (1);
-		}
+		// if (pthread_mutex_init(&philo[i].meal_lock, NULL))
+		// {
+		// 	clean_all(data, philo);
+		// 	return (1);
+		// }
 	}
 	return (0);
 }

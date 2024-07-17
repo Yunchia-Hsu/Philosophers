@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 08:18:33 by alli              #+#    #+#             */
-/*   Updated: 2024/07/16 16:04:50 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/17 13:50:49 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_philo
     pthread_t		philo_thread;
 	pthread_mutex_t *l_fork;
 	pthread_mutex_t	*r_fork;
-	pthread_mutex_t	meal_lock; //might be unnecessary  used in routine and monitoring
+	// pthread_mutex_t	meal_lock; //might be unnecessary  used in routine and monitoring
 } t_philo;
 
 /*philosopher utilities*/
