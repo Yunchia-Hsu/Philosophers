@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 14:29:33 by alli              #+#    #+#             */
-/*   Updated: 2024/07/17 14:29:37 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/17 15:26:31 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int validate_input(int argc, char **argv)
             return (ft_putstr_fd("invalid time to eat\n", 2), 1);
         else if (i == 4 && ft_atol(argv[i]) <= 0)
             return (ft_putstr_fd("invalid time to sleep\n", 2), 1);
-        else if (i == 5 && ft_atol(argv[i]) < 0)
+        else if (i == 5 && ft_atol(argv[i]) <= 0)
             return (ft_putstr_fd("invalid times each philo should eat\n", 2), 1);
         i++;
     }

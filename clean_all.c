@@ -35,10 +35,8 @@ int clean_program(t_program *data)
 int clean_all(t_program *data, t_philo *philo)
 {
     clean_program(data);
-    // if (clean_philo(data, philo))
-    //     return (clean_program(data));
-    free(philo);
+	if (philo)
+    	free(philo);
     philo = NULL;
     return (0);
 }
-// free all threads and return(1)

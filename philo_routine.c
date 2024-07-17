@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:12:13 by alli              #+#    #+#             */
-/*   Updated: 2024/07/17 14:00:09 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/17 15:52:45 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,14 @@ static int	eat(t_philo *philo)
 		return (1);
 	pthread_mutex_lock(philo->r_fork);
 	print_action(philo, "has taken right fork\n");
-	if (philo->data->philo_n == 1) //check if it's a single philo
+	if (philo->data->philo_n == 1)
 		return (die_alone(philo));
 	pthread_mutex_lock(philo->l_fork);
 	print_action(philo, "has taken left fork\n");
 	if (dead_or_finished(philo))
 	{
 		pthread_mutex_unlock(philo->r_fork);
-		//print_action(philo, "has returned right fork\n");//need t deklete
 		pthread_mutex_unlock(philo->l_fork);
-		//print_action(philo, "has returned left fork\n");//need t deklete
 		return (1);
 	}
 	pthread_mutex_lock(&philo->data->eating_lock);
@@ -66,9 +64,7 @@ static int	eat(t_philo *philo)
 	pthread_mutex_unlock(&philo->data->eating_lock);
 	ft_usleep(philo->data->time_to_eat);
 	pthread_mutex_unlock(philo->l_fork);
-	//print_action(philo, "has returned left fork\n");//need t deklete
 	pthread_mutex_unlock(philo->r_fork);
-	//print_action(philo, "has returned right fork\n");//need t deklete
 	return (0);
 }
 
@@ -84,10 +80,7 @@ static int	sleep_philo(t_philo *philo)
 static int	think(t_philo *philo)
 {
 	if (dead_or_finished(philo))
-	{
-		//printf("think returned 1\n");
 		return (1);
-	}
 	print_action(philo, "is thinking\n");
 	return (0);
 }
@@ -97,22 +90,16 @@ void	*philo_routine(void *ptr)
 	t_philo *philo;
 	
 	philo = (t_philo *)ptr;
-	
 	if (philo->philo_index % 2 == 0)
 		ft_usleep(50);
-	// printf("philo_index %d\n", philo->philo_index);
 	while (!dead_or_finished(philo))
 	{
-		//printf("routine 1 \n");
-		//printf("philo %d is in routine\n", philo->philo_index);
 		if (eat(philo) == 1)
 			return (NULL);
 		if (sleep_philo(philo) == 1)
 			return (NULL);
 		if (think(philo) == 1)
 			return (NULL);
-		//printf("routine 3 \n");
 	}
-	//printf("routine 4 \n");
 	return (NULL);
 }
