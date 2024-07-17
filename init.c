@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 08:19:34 by alli              #+#    #+#             */
-/*   Updated: 2024/07/17 14:31:32 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/17 14:32:23 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ int	init_data_mutexes(t_program *data)
 		return (1); //exit?
 	while (i < data->philo_n)
 	{
-		if (pthread_mutex_init(&data->forks[i], NULL))
-			return (1);
+		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
+			clean_forks(i, data);
 		i++;
 	}
-	if (pthread_mutex_init(&data->eating_lock, NULL))
+	if (pthread_mutex_init(&data->eating_lock, NULL) != 0)
 		return (1);
-	if (pthread_mutex_init(&data->print_lock, NULL))
+	if (pthread_mutex_init(&data->print_lock, NULL) != 0)
 		return (1);
-	if (pthread_mutex_init(&data->death_lock, NULL))
+	if (pthread_mutex_init(&data->death_lock, NULL) != 0)
 		return (1);
 	return (0);
 }

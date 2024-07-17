@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
+/*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 08:19:07 by alli              #+#    #+#             */
-/*   Updated: 2024/07/17 14:08:49 by yhsu             ###   ########.fr       */
+/*   Updated: 2024/07/17 14:32:37 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int check_death_flag(t_program *data)
         pthread_mutex_unlock(&data->death_lock);
         return (1);
     }
-    pthread_mutex_unlock(&data->death_lock);    
+    pthread_mutex_unlock(&data->death_lock);
     return (0);
 }
 

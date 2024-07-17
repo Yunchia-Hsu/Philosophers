@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 08:18:33 by alli              #+#    #+#             */
-/*   Updated: 2024/07/17 13:50:49 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/17 14:07:42 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,6 @@ int check_death_flag(t_program *data);
 
 /*clean all*/
 int clean_all(t_program *data, t_philo *philo);
-// int clean_philo(t_program *data, t_philo *philo);
+int	clean_forks(int i, t_program *data);
 int clean_program(t_program *data);
 #endif
