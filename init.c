@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 08:19:34 by alli              #+#    #+#             */
-/*   Updated: 2024/07/17 13:50:35 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/17 14:31:32 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,7 @@ int	init_program(t_program *data, char **argv, int argc)
 		//printf("in data mutexes\n");
 		return (1);
 	}
-	//printf("init 9\n");
-	// printf("finished init_philo\n");
+
 	return (0);
 }
 

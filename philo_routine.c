@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:12:13 by alli              #+#    #+#             */
-/*   Updated: 2024/07/16 16:40:25 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/17 14:09:54 by yhsu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,40 +53,29 @@ int	die_alone(t_philo *philo)
 
 static int	eat(t_philo *philo)
 {
-	//printf("in eat 1 \n");
 	if (am_i_full(philo))
 		return (1);
-	//printf(" philo %d in eat 2 \n", philo->philo_index);
 	pthread_mutex_lock(philo->r_fork);
-	//printf(" philo %d in eat 3 \n", philo->philo_index);
 	print_action(philo, "has taken right fork\n");
-	//printf("philo %d entered eat 1\n",philo->philo_index);
 	if (philo->data->philo_n == 1) //check if it's a single philo
 		return (die_alone(philo));
-	//printf(" philo %d in eat 4 \n", philo->philo_index);
 	pthread_mutex_lock(philo->l_fork);
 	print_action(philo, "has taken left fork\n");
 	if (dead_or_finished(philo))
 	{
 		pthread_mutex_unlock(philo->r_fork);
-		//print_action(philo, "has returned right fork\n");//need t deklete
 		pthread_mutex_unlock(philo->l_fork);
-		//print_action(philo, "has returned left fork\n");//need t deklete
 		return (1);
 	}
-	//pthread_mutex_lock(&philo->meal_lock);
 	pthread_mutex_lock(&philo->data->eating_lock);
 	print_action(philo, "is eating\n");
 	philo->last_meal_time = get_current_time();
 	if (philo->data->meals_to_eat != -1)
 		philo->num_meals_eaten++;
-	//pthread_mutex_unlock(&philo->meal_lock);
-	 pthread_mutex_unlock(&philo->data->eating_lock);
+	pthread_mutex_unlock(&philo->data->eating_lock);
 	ft_usleep(philo->data->time_to_eat);
 	pthread_mutex_unlock(philo->l_fork);
-	//print_action(philo, "has returned left fork\n");//need t deklete
 	pthread_mutex_unlock(philo->r_fork);
-	//print_action(philo, "has returned right fork\n");//need t deklete
 	return (0);
 }
 
@@ -119,22 +108,16 @@ void	*philo_routine(void *ptr)
 	t_philo *philo;
 	
 	philo = (t_philo *)ptr;
-	
 	if (philo->philo_index % 2 == 0)
 		ft_usleep(50);
-	// printf("philo_index %d\n", philo->philo_index);
 	while (!dead_or_finished(philo))
 	{
-		//printf("routine 1 \n");
-		//printf("philo %d is in routine\n", philo->philo_index);
 		if (eat(philo) == 1)
 			return (NULL);
 		if (sleep_philo(philo) == 1)
 			return (NULL);
 		if (think(philo) == 1)
 			return (NULL);
-		//printf("routine 3 \n");
 	}
-	//printf("routine 4 \n");
 	return (NULL);
 }
