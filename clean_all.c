@@ -21,29 +21,29 @@ int clean_program(t_program *data)
     return (0);
 }
 
-// int clean_philo(t_program *data, t_philo *philo)
-// {
-//     int i;
+int clean_philo(t_program *data, t_philo *philo)
+{
+    int i;
 
-//     i = 0;
-//     if (philo == NULL || philo->data == NULL)
-//     {
-//         ft_putstr_fd( "Error: philo or philo->data is NULL\n", 2);
-//         return(1);
-//     }
-//     while (i < data->philo_n)
-//     {
-//         pthread_mutex_destroy(&philo[i++].meal_lock);//destroy every philo's meal lock
-//     }
-//     return (0);
-// }
+    i = 0;
+    if (philo == NULL || philo->data == NULL)
+    {
+        ft_putstr_fd( "Error: philo or philo->data is NULL\n", 2);
+        return(1);
+    }
+    while (i < data->philo_n)
+    {
+        pthread_mutex_destroy(&philo[i++].meal_lock);//destroy every philo's meal lock
+    }
+    return (0);
+}
 
 
 int clean_all(t_program *data, t_philo *philo)
 {
     clean_program(data);
-    // if (clean_philo(data, philo))
-    //     return (clean_program(data));
+    if (clean_philo(data, philo))
+        return (clean_program(data));
     free(philo);
     philo = NULL;
     return (0);

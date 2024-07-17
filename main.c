@@ -113,25 +113,13 @@ int init_threads(t_philo *philo, t_program *data)
     }
 	
    while (i < data->philo_n)
-   {
-       
-	   //data->philo_thread[i] = (unsigned long)malloc(sizeof(pthread_t));
-       
-
-	//if (!philo->data->philo_thread[i])
-    //    {
-    //        printf("thread.6\n");
-	// 	    ft_putstr_fd("Error: malloc\n", 2);
-    //         return (clean_all(data, philo));
-    //    }
-	 
+   {	 
         if (pthread_create(&philo[i].philo_thread, NULL, &philo_routine, &philo[i]))
         {
             ft_putstr_fd("Error: philo thread_create failed\n", 2);
             return (clean_all(data, philo));
         }
-		
-      i++;  
+		i++;  
    }
 	if (thread_join(monitor, philo) != 0)
         return (1);

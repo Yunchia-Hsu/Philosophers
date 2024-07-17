@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 08:19:07 by alli              #+#    #+#             */
-/*   Updated: 2024/07/16 15:55:34 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/17 11:17:48 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int check_death_flag(t_program *data)
         pthread_mutex_unlock(&data->death_lock);
         return (1);
     }
-    pthread_mutex_unlock(&data->death_lock);    
+    pthread_mutex_unlock(&data->death_lock);
     return (0);
 }
 
@@ -41,32 +41,16 @@ int hungery_to_die(t_program *data, t_philo *philo)
 {
     long long elapse;
 
-	//printf("hungry0\n");
     pthread_mutex_lock(&data->eating_lock);
-	//printf("hungry1\n");
-    // pthread_mutex_lock(&data->death_lock);
-	// printf("%lld hungery_to_die\n", philo->last_meal_time);
     elapse = get_current_time() - philo->last_meal_time;
     if (elapse >= data->time_to_die)
     {
-		// printf("elapse vs time_to_die %lld %lld \n", elapse, data->time_to_die);
-        // printf("philo %d \n", philo->philo_index);
-		// printf("get_current_time() %lld \n", get_current_time());
-		// printf("philo->last_meal_time %lld \n", philo->last_meal_time);
-		// printf("elapse %lld \n", elapse);
-		// printf("data->time_to_die %lld \n", data->time_to_die);
-		// printf("hungry4\n");
 		data->dead_philo_flag = 1;
+		pthread_mutex_unlock(&data->eating_lock);
 		print_death(philo);
-        pthread_mutex_unlock(&data->eating_lock);
-        data->dead_philo_flag = true;
-        // pthread_mutex_unlock(&data->death_lock);
         return (1);
     }
-    //printf("hungry5\n");
 	pthread_mutex_unlock(&data->eating_lock);
-    // pthread_mutex_unlock(&data->death_lock);
-    //printf("hungry6\n");
 	return (0);
 }
 
@@ -85,11 +69,6 @@ int death_check(t_program *data, t_philo *philo)
 			printf("hungry to die return 1\n");
 			return (1);
 		}
-		// if (starvation_check(philo))
-		// {
-		// 	printf("starvation check return 1\n");
-		// 	return (1);
-		// }
         i++;
     }
     return (0);

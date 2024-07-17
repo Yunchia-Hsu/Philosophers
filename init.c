@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 08:19:34 by alli              #+#    #+#             */
-/*   Updated: 2024/07/16 16:58:20 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/17 11:06:04 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,32 +22,18 @@ int	init_data_mutexes(t_program *data)
 		return (1); //exit?
 	while (i < data->philo_n)
 	{
-		if (pthread_mutex_init(&data->forks[i], NULL))
+		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
 			return (1);
 		i++;
 	}
-	if (pthread_mutex_init(&data->eating_lock, NULL))
+	if (pthread_mutex_init(&data->eating_lock, NULL) != 0)
 		return (1);
-	if (pthread_mutex_init(&data->print_lock, NULL))
+	if (pthread_mutex_init(&data->print_lock, NULL) != 0)
 		return (1);
-	if (pthread_mutex_init(&data->death_lock, NULL))
+	if (pthread_mutex_init(&data->death_lock, NULL) != 0)
 		return (1);
 	return (0);
 }
-
-// int	init_philo_mutexes(t_philo *philo)
-// {
-// 	// printf("philo_mutex 1\n");
-// 	// if (pthread_mutex_init(philo->l_fork, NULL))// do I need to initialize these forks?
-// 	// 	return (1);
-// 	// printf("philo_mutex 2\n");
-// 	// if (pthread_mutex_init(philo->r_fork, NULL))
-// 	// 	return (1);
-// 	printf("philo_mutex 3\n");
-// 	if (pthread_mutex_init(&philo->sleep_lock, NULL))
-// 		return (1);
-// 	return (0);
-// }
 
 int	init_program(t_program *data, char **argv, int argc)
 {
@@ -75,7 +61,7 @@ int	init_program(t_program *data, char **argv, int argc)
 	data->dead_philo_flag = false;
 	//printf("init 7\n");
 	data->everyone_full_flag = false;
-	// data->can_write = true;
+	// data->print_lock = true;
 	//rintf("init 8\n");
 	if (init_data_mutexes(data))
 	{
@@ -105,12 +91,12 @@ int	init_philo(t_philo	*philo, t_program *data)
 			philo[i].l_fork = &data->forks[0];
 		else
 			philo[i].l_fork = &data->forks[i + 1];
-		i++;
 		if (pthread_mutex_init(&philo[i].meal_lock, NULL))
 		{
 			clean_all(data, philo);
 			return (1);
 		}
+		i++;
 	}
 	return (0);
 }
