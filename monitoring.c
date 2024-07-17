@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 08:19:07 by alli              #+#    #+#             */
-/*   Updated: 2024/07/16 16:38:58 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/16 16:42:34 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,9 @@ int hungery_to_die(t_program *data, t_philo *philo)
     elapse = current_time - philo->last_meal_time;
     if (elapse >= data->time_to_die)
     {
-		print_death(philo); 
+		
         pthread_mutex_unlock(&philo->meal_lock);
+        print_death(philo); 
         return (1);
     }
 	//pthread_mutex_unlock(&data->eating_lock);
