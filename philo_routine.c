@@ -74,13 +74,14 @@ static int	eat(t_philo *philo)
 		//print_action(philo, "has returned left fork\n");//need t deklete
 		return (1);
 	}
-	pthread_mutex_lock(&philo->meal_lock);
+	//pthread_mutex_lock(&philo->meal_lock);
+	pthread_mutex_lock(&philo->data->eating_lock);
 	print_action(philo, "is eating\n");
 	philo->last_meal_time = get_current_time();
 	if (philo->data->meals_to_eat != -1)
 		philo->num_meals_eaten++;
-	pthread_mutex_unlock(&philo->meal_lock);
-	
+	//pthread_mutex_unlock(&philo->meal_lock);
+	 pthread_mutex_unlock(&philo->data->eating_lock);
 	ft_usleep(philo->data->time_to_eat);
 	pthread_mutex_unlock(philo->l_fork);
 	//print_action(philo, "has returned left fork\n");//need t deklete
