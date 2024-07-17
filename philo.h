@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
+/*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 08:18:33 by alli              #+#    #+#             */
-/*   Updated: 2024/07/17 11:40:40 by yhsu             ###   ########.fr       */
+/*   Updated: 2024/07/16 16:04:50 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,7 @@ int	starvation_check(t_philo *philo);
 int	finished_meals(t_philo *philo);
 
 /*initializing*/
-//int	init_philo(t_philo	*philo, t_program *data);
-int	init_philo(t_philo	*philo, t_program *data, int argc);
+int	init_philo(t_philo	*philo, t_program *data);
 int	init_program(t_program *data, char **argv, int argc);
 
 /*printing*/

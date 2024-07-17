@@ -157,7 +157,7 @@ int	main(int argc, char **argv)
 	philo = malloc(data.philo_n * sizeof(t_philo));
 	if (!philo)
         return (clean_program(&data));
-    if (init_philo(philo, &data, argc)) //this should be what kind of &data each philosopher carries
+    if (init_philo(philo, &data)) //this should be what kind of &data each philosopher carries
 		return (clean_program(&data));
 		//return (clean_all(&data, philo));
     //printf("test0\n");
