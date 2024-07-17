@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 08:18:41 by alli              #+#    #+#             */
-/*   Updated: 2024/07/16 10:55:40 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/17 14:10:17 by yhsu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,6 @@ void ft_usleep(long long millisecond)
 	while ((get_current_time() - start) < millisecond)
 		usleep(500);//可以讓操作系統有機會調度其他任務
 }
-
-// size_t get_current_time(void)
-// {
-// 	struct timeval time;
-	
-// 	printf("entered get_current_time\n");
-// 	if (gettimeofday(&time, NULL) == -1)
-// 		ft_putstr_fd("Error: getimeof day failed\n", 2);
-// 	printf("time %zu\n", time.tv_usec * 1000 + time.tv_usec / 1000);
-// 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
-// }
 
 long long	get_current_time(void)
 {

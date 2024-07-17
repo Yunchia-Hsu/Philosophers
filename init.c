@@ -6,7 +6,7 @@
 /*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 08:19:34 by alli              #+#    #+#             */
-/*   Updated: 2024/07/17 13:46:38 by yhsu             ###   ########.fr       */
+/*   Updated: 2024/07/17 13:55:10 by yhsu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,7 @@ int	init_program(t_program *data, char **argv, int argc)
 		//printf("in data mutexes\n");
 		return (1);
 	}
-	//printf("init 9\n");
-	// printf("finished init_philo\n");
+
 	return (0);
 }
 
