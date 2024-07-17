@@ -1,51 +1,57 @@
-
 # NAME := philo
 
 # CC := cc
 
-# #-fsanitize=thread
-# CFLAGS := =Wall -Werror -Wextra -fsanitize=thread
+# # -fsanitize=thread
+# CFLAGS := -Wall -Werror -Wextra 
 
 # YELLOW := \033[0;33m
 # RESET := \033[0m
+# BLUE = \033[0;34m
 
-# #dericetories
+# # Directories
 # OBJS_DIR := objs/
 
-# SRCS := main.c philo_utils.c init.c philo_routine.c monitoring.c free.c printing.c
+# SRCS := main.c philo_utils.c init.c philo_routine.c monitoring.c printing.c clean_all.c
 
-# #object file with path
+# # Object files with path
 # OBJS := $(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
 
 # all: $(NAME)
 
-# (NAME): $(OBJS_DIR) $(OBJS) 
-# 	@cc -o $(NAME) $(OBJS) $(CFLAGS)
-# 	@echo "$(YELLOW)Built $@$(RESET)"
+# # Create the executable
+# $(NAME): $(OBJS_DIR) $(OBJS)
+# 	@$(CC) -o $(NAME) $(OBJS) $(CFLAGS)
+# 	@echo "$(BLUE)Built $@$(RESET)"
 
+# # Create the object directory
 # $(OBJS_DIR):
-# 		mkdir -p $(OBJS_DIR)
+# 	@mkdir -p $(OBJS_DIR)
 
+# # Compile source files to object files
 # $(OBJS_DIR)%.o: %.c
 # 	@$(CC) $(CFLAGS) -c $< -o $@
 
 # clean:
-# 		@rm -fr $(OBJS_DIR)
-# 		@echo "$(YELLOW) $(OBJS_DIR) directory and object files were removed$(RESET)"
+# 	@rm -fr $(OBJS_DIR)
+# 	@echo "$(BLUE)$(OBJS_DIR) directory and object files were removed$(RESET)"
 
 # fclean: clean
 # 	@rm -f $(NAME)
-# 	@echo "Removed $(RESET)"
+# 	@echo "$(BLUE)Removed $(NAME)$(RESET)"
 
 # re: fclean all
 
+##############################
 NAME := philo
 
 CC := cc
 
-# -fsanitize=thread
-CFLAGS := -Wall -Werror -Wextra 
+# -g -fsanitize=thread
+CFLAGS := -Wall -Werror -Wextra
 
+
+BLUE = \033[0;34m
 YELLOW := \033[0;33m
 RESET := \033[0m
 
@@ -62,7 +68,7 @@ all: $(NAME)
 # Create the executable
 $(NAME): $(OBJS_DIR) $(OBJS)
 	@$(CC) -o $(NAME) $(OBJS) $(CFLAGS)
-	@echo "$(YELLOW)Built $@$(RESET)"
+	@echo "$(BLUE)Built $@$(RESET)"
 
 # Create the object directory
 $(OBJS_DIR):
@@ -70,14 +76,15 @@ $(OBJS_DIR):
 
 # Compile source files to object files
 $(OBJS_DIR)%.o: %.c
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@ 
+	@echo "$(BLUE)Compiled $< to $@$(RESET)"
 
 clean:
 	@rm -fr $(OBJS_DIR)
-	@echo "$(YELLOW)$(OBJS_DIR) directory and object files were removed$(RESET)"
+	@echo "$(BLUE)$(OBJS_DIR) directory and object files were removed$(RESET)"
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "$(YELLOW)Removed $(NAME)$(RESET)"
+	@echo "$(BLUE)Removed $(NAME)$(RESET)"
 
 re: fclean all

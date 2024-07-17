@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 08:18:33 by alli              #+#    #+#             */
-/*   Updated: 2024/07/17 11:02:15 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/17 14:07:42 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,15 @@ typedef struct timeval	t_timeval;
 
 typedef struct s_program
 {
-    int 	philo_n;
-	long long	start_time;
-	long long	time_to_eat;
-	long long	time_to_die;
-	long long	time_to_sleep;
-	int		meals_to_eat; //# of meals 6th argument
-	bool	dead_philo_flag;// if one philois dead, it turns true
-	bool	everyone_full_flag;
-	// bool	can_write;
+    int 			philo_n;
+	long long		start_time;
+	long long		time_to_eat;
+	long long		time_to_die;
+	long long		time_to_sleep;
+	int				meals_to_eat; //# of meals 6th argument
+	bool			dead_philo_flag;// if one philois dead, it turns true
+	bool			everyone_full_flag;
+	bool			can_write;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_lock; //only 1 philosopher can print at a time
 	pthread_mutex_t	death_lock; //only 1 death
@@ -51,16 +51,16 @@ typedef struct s_program
 
 typedef struct s_philo
 {
-    t_program	*data;
-	bool 	n_philo_full;//philo[index] is fill
-	int		philo_index;//index starts from 1
-	long long	last_meal_time;
-	int		num_meals_eaten;
-	bool		all_meals_eaten;
-    pthread_t	philo_thread;
+    t_program		*data;
+	bool 			n_philo_full;//philo[index] is fill
+	int				philo_index;//index starts from 1
+	long long		last_meal_time;
+	int				num_meals_eaten;
+	bool			all_meals_eaten;
+    pthread_t		philo_thread;
 	pthread_mutex_t *l_fork;
 	pthread_mutex_t	*r_fork;
-	pthread_mutex_t	meal_lock;
+	// pthread_mutex_t	meal_lock; //might be unnecessary  used in routine and monitoring
 } t_philo;
 
 /*philosopher utilities*/
@@ -98,6 +98,6 @@ int check_death_flag(t_program *data);
 
 /*clean all*/
 int clean_all(t_program *data, t_philo *philo);
-// int clean_philo(t_program *data, t_philo *philo);
+int	clean_forks(int i, t_program *data);
 int clean_program(t_program *data);
 #endif

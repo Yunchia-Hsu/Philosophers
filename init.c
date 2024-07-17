@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 08:19:34 by alli              #+#    #+#             */
-/*   Updated: 2024/07/17 11:06:04 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/17 14:10:24 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	init_data_mutexes(t_program *data)
 	while (i < data->philo_n)
 	{
 		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
-			return (1);
+			clean_forks(i, data);
 		i++;
 	}
 	if (pthread_mutex_init(&data->eating_lock, NULL) != 0)
@@ -37,9 +37,8 @@ int	init_data_mutexes(t_program *data)
 
 int	init_program(t_program *data, char **argv, int argc)
 {
-	int	i;
-
-	i = 0;
+	//int	i;
+	//i = 0;
 	
 	if (!argv)
 		return (1);
@@ -57,11 +56,14 @@ int	init_program(t_program *data, char **argv, int argc)
 		data->meals_to_eat = ft_atol(argv[5]);
 		//printf("init arv[5] \n");
 	}
+	else
+		data->meals_to_eat = -1;
 	//printf("init 6\n");
 	data->dead_philo_flag = false;
 	//printf("init 7\n");
 	data->everyone_full_flag = false;
-	// data->print_lock = true;
+	data->can_write = true;
+	// data->can_write = true;
 	//rintf("init 8\n");
 	if (init_data_mutexes(data))
 	{
@@ -91,12 +93,12 @@ int	init_philo(t_philo	*philo, t_program *data)
 			philo[i].l_fork = &data->forks[0];
 		else
 			philo[i].l_fork = &data->forks[i + 1];
-		if (pthread_mutex_init(&philo[i].meal_lock, NULL))
-		{
-			clean_all(data, philo);
-			return (1);
-		}
 		i++;
+		// if (pthread_mutex_init(&philo[i].meal_lock, NULL))
+		// {
+		// 	clean_all(data, philo);
+		// 	return (1);
+		// }
 	}
 	return (0);
 }
