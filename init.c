@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alli <alli@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 08:19:34 by alli              #+#    #+#             */
-/*   Updated: 2024/07/16 16:36:20 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/17 13:46:38 by yhsu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,11 @@ int	init_philo(t_philo	*philo, t_program *data)
 		else
 			philo[i].l_fork = &data->forks[i + 1];
 		i++;
-		if (pthread_mutex_init(&philo[i].meal_lock, NULL))
-		{
-			clean_all(data, philo);
-			return (1);
-		}
+		// if (pthread_mutex_init(&philo[i].meal_lock, NULL))
+		// {
+		// 	clean_all(data, philo);
+		// 	return (1);
+		// }
 	}
 	return (0);
 }
