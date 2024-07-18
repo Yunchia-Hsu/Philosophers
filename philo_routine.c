@@ -6,32 +6,11 @@
 /*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:12:13 by alli              #+#    #+#             */
-/*   Updated: 2024/07/17 15:52:45 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/18 11:17:46 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	finished_meals(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->data->eating_lock);
-	if (philo->all_meals_eaten == true)//will be update in monitoring so here only needs to check
-	{
-		pthread_mutex_unlock(&philo->data->eating_lock);
-		return (1);
-	}
-	pthread_mutex_unlock(&philo->data->eating_lock);
-	return (0);
-}
-
-int	dead_or_finished(t_philo *philo)
-{
-	if (check_death_flag(philo->data) || finished_meals(philo))
-	{
-		return (1);
-	}
-	return (0);
-}
 
 int	die_alone(t_philo *philo)
 {
@@ -87,8 +66,8 @@ static int	think(t_philo *philo)
 
 void	*philo_routine(void *ptr)
 {
-	t_philo *philo;
-	
+	t_philo	*philo;
+
 	philo = (t_philo *)ptr;
 	if (philo->philo_index % 2 == 0)
 		ft_usleep(50);

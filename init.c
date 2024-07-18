@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 08:19:34 by alli              #+#    #+#             */
-/*   Updated: 2024/07/17 15:56:10 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/18 10:47:16 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ int	init_philo(t_philo	*philo, t_program *data)
 		philo[i].philo_index = i;
 		philo[i].n_philo_full = false;
 		philo[i].num_meals_eaten = 0;
-        philo[i].last_meal_time = get_current_time();
-        philo[i].all_meals_eaten = false;
+		philo[i].last_meal_time = get_current_time();
+		philo[i].all_meals_eaten = false;
 		philo[i].r_fork = &data->forks[i];
 		if (i == (data->philo_n - 1))
 			philo[i].l_fork = &data->forks[0];
@@ -76,5 +76,54 @@ int	init_philo(t_philo	*philo, t_program *data)
 			philo[i].l_fork = &data->forks[i + 1];
 		i++;
 	}
+	return (0);
+}
+
+static	int	thread_join(pthread_t monitor, t_philo *philo)
+{
+	int	i;
+
+	i = 0;
+	if (pthread_join(monitor, NULL) != 0)
+	{
+		ft_putstr_fd("Error: monitor_join falied\n", 2);
+		return (clean_all(philo->data, philo));
+	}
+	while (i < philo->data->philo_n)
+	{
+		if (pthread_join(philo[i].philo_thread, NULL) != 0)
+		{
+			ft_putstr_fd("Error: philo_join falied\n", 2);
+			return (clean_all(philo->data, philo));
+		}
+		i++;
+	}
+	return (0);
+}
+
+int	init_threads(t_philo *philo, t_program *data)
+{
+	pthread_t	monitor;
+	int			i;
+
+	i = 0;
+	if (pthread_create(&monitor, NULL,
+			&monitoring, philo))
+	{
+		ft_putstr_fd("Error: monitoring thread_creat failed\n", 2);
+		return (1);
+	}
+	while (i < data->philo_n)
+	{
+		if (pthread_create(&philo[i].philo_thread, NULL,
+				&philo_routine, &philo[i]))
+		{
+			ft_putstr_fd("Error: philo thread_create failed\n", 2);
+			return (clean_all(data, philo));
+		}
+		i++;
+	}
+	if (thread_join(monitor, philo) != 0)
+		return (1);
 	return (0);
 }

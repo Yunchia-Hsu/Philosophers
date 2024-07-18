@@ -6,7 +6,7 @@
 /*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 08:18:41 by alli              #+#    #+#             */
-/*   Updated: 2024/07/17 15:41:41 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/18 11:28:12 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-void ft_usleep(long long millisecond)
+void	ft_usleep(long long millisecond)
 {
-	long long start;
-	
+	long long	start;
+
 	start = get_current_time();
 	while ((get_current_time() - start) < millisecond)
-		usleep(500);//可以讓操作系統有機會調度其他任務
+		usleep(500);
 }
 
 long long	get_current_time(void)
@@ -42,7 +42,7 @@ long long	get_current_time(void)
 
 int	ft_putstr_fd(char *s, int fd)
 {
-	if (! s)
+	if (!s)
 	{
 		if (ft_putstr_fd("(null)", fd) == -1)
 			return (-1);
@@ -51,75 +51,4 @@ int	ft_putstr_fd(char *s, int fd)
 	if (write (fd, s, ft_strlen(s)) == -1)
 		return (-1);
 	return (0);
-}
-
-
-int	ft_isdigit(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] >= '0' && str[i] <= '9')
-		i++;
-	if (str[i] == '\0')
-		return (1);
-	else
-		return (0);
-}
-
-static int	check_longint(long num, int dig)
-{
-	long long	llong_max;
-
-	llong_max = 9223372036854775807;
-	if (num > llong_max / 10)
-		return (1);
-	else if (num * 10 > llong_max - dig)
-		return (1);
-	return (0);
-}
-
-int	str_char_check(const char *str)
-{
-	int	i;
-	// int	len;
-
-	i = 0;
-	if (!ft_isdigit((char *)str))
-		return (-1);
-	while (str[i] == '\n' || str[i] == ' ' || str[i] == '\v'
-		|| str[i] == '\t' || str[i] == '\f' || str[i] == '\r')
-		i++;
-	if (i == '\0')
-		return (0);
-	else
-		return (-1);
-}
-
-long	ft_atol(const char *str)
-{
-	int				sign;
-	long			total;
-	int				i;
-
-	sign = 1;
-	total = 0;
-	i = 0;
-	if (str_char_check(str) == -1)
-		return (-1);
-	if (((str[i] == '+') || str[i] == '-') && str[i])
-	{
-		if (str[i] == '-')
-			sign = 0;
-		i++;
-	}
-	while (str[i])
-	{
-		if (check_longint(total, str[i] - '0'))
-			return (sign * -1);
-		total = total * 10 + (str[i++] - '0');
-	}
-	if (!sign)
-		total = total * -1;
-	return (total);
 }
