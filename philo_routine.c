@@ -3,35 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:12:13 by alli              #+#    #+#             */
-/*   Updated: 2024/07/17 14:32:29 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/18 13:37:46 by yhsu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	finished_meals(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->data->eating_lock);
-	if (philo->all_meals_eaten == true)//will be update in monitoring so here only needs to check
-	{
-		pthread_mutex_unlock(&philo->data->eating_lock);
-		return (1);
-	}
-	pthread_mutex_unlock(&philo->data->eating_lock);
-	return (0);
-}
-
-int	dead_or_finished(t_philo *philo)
-{
-	if (check_death_flag(philo->data) || finished_meals(philo))
-	{
-		return (1);
-	}
-	return (0);
-}
 
 int	die_alone(t_philo *philo)
 {
@@ -45,11 +24,11 @@ static int	eat(t_philo *philo)
 	if (am_i_full(philo))
 		return (1);
 	pthread_mutex_lock(philo->r_fork);
-	print_action(philo, "has taken right fork\n");
-	if (philo->data->philo_n == 1) //check if it's a single philo
+	print_action(philo, "has taken a fork\n");
+	if (philo->data->philo_n == 1)
 		return (die_alone(philo));
 	pthread_mutex_lock(philo->l_fork);
-	print_action(philo, "has taken left fork\n");
+	print_action(philo, "has taken a fork\n");
 	if (dead_or_finished(philo))
 	{
 		pthread_mutex_unlock(philo->r_fork);
@@ -80,18 +59,15 @@ static int	sleep_philo(t_philo *philo)
 static int	think(t_philo *philo)
 {
 	if (dead_or_finished(philo))
-	{
-		//printf("think returned 1\n");
 		return (1);
-	}
 	print_action(philo, "is thinking\n");
 	return (0);
 }
 
 void	*philo_routine(void *ptr)
 {
-	t_philo *philo;
-	
+	t_philo	*philo;
+
 	philo = (t_philo *)ptr;
 	if (philo->philo_index % 2 == 0)
 		ft_usleep(50);
