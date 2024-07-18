@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/10 08:18:33 by alli              #+#    #+#             */
-/*   Updated: 2024/07/18 13:50:22 by yhsu             ###   ########.fr       */
+/*   Created: 2024/07/18 16:37:19 by yhsu              #+#    #+#             */
+/*   Updated: 2024/07/18 19:41:04 by yhsu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ int			validate_input(int argc, char **argv);
 long		ft_atol(const char *str);
 int			ft_isdigit(char *str);
 int			ft_putstr_fd(char *s, int fd);
-void		ft_usleep(long long millisecond);
+//void		ft_usleep(long long millisecond);
+int	ft_usleep(long long millisecond, t_philo *philo);
 long long	get_current_time(void);
 
 /*philo routine*/
@@ -71,7 +72,6 @@ int			die_alone(t_philo *philo);
 /*dead or finished check*/
 int			dead_or_finished(t_philo *philo);
 int			finished_meals(t_philo *philo);
-int			am_i_full(t_philo *philo);
 
 /*initializing*/
 int			init_philo(t_philo	*philo, t_program *data);

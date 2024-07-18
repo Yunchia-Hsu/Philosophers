@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/12 08:18:41 by alli              #+#    #+#             */
-/*   Updated: 2024/07/18 13:37:36 by yhsu             ###   ########.fr       */
+/*   Created: 2024/07/18 16:36:57 by yhsu              #+#    #+#             */
+/*   Updated: 2024/07/18 19:40:57 by yhsu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,18 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-void	ft_usleep(long long millisecond)
+int	ft_usleep(long long millisecond, t_philo *philo)
 {
 	long long	start;
 
 	start = get_current_time();
 	while ((get_current_time() - start) < millisecond)
+	{
+		if (check_death_flag(philo->data))
+			return (1);
 		usleep(500);
+	}
+	return (0);	
 }
 
 long long	get_current_time(void)

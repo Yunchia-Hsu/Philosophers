@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/09 08:19:34 by alli              #+#    #+#             */
-/*   Updated: 2024/07/18 13:38:22 by yhsu             ###   ########.fr       */
+/*   Created: 2024/07/18 16:36:20 by yhsu              #+#    #+#             */
+/*   Updated: 2024/07/18 16:37:45 by yhsu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	init_philo(t_philo	*philo, t_program *data)
 	while (i < data->philo_n)
 	{
 		philo[i].data = data;
-		philo[i].philo_index = i;
+		philo[i].philo_index = i + 1;
 		philo[i].n_philo_full = false;
 		philo[i].num_meals_eaten = 0;
 		philo[i].last_meal_time = get_current_time();
