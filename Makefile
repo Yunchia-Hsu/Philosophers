@@ -51,7 +51,7 @@ CC := cc
 CFLAGS := -Wall -Werror -Wextra 
 
 
-BLUE = \033[0;34m
+BLUE := \033[0;34m
 YELLOW := \033[0;33m
 RESET := \033[0m
 
