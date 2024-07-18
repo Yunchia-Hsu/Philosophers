@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:12:13 by alli              #+#    #+#             */
-/*   Updated: 2024/07/18 11:17:46 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/18 13:23:49 by yhsu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ static int	eat(t_philo *philo)
 	if (am_i_full(philo))
 		return (1);
 	pthread_mutex_lock(philo->r_fork);
-	print_action(philo, "has taken right fork\n");
+	print_action(philo, "has taken a fork\n");
 	if (philo->data->philo_n == 1)
 		return (die_alone(philo));
 	pthread_mutex_lock(philo->l_fork);
-	print_action(philo, "has taken left fork\n");
+	print_action(philo, "has taken a fork\n");
 	if (dead_or_finished(philo))
 	{
 		pthread_mutex_unlock(philo->r_fork);

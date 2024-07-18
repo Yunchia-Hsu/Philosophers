@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 08:19:34 by alli              #+#    #+#             */
-/*   Updated: 2024/07/18 10:47:16 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/18 13:33:59 by yhsu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,14 @@ static	int	thread_join(pthread_t monitor, t_philo *philo)
 	i = 0;
 	if (pthread_join(monitor, NULL) != 0)
 	{
-		ft_putstr_fd("Error: monitor_join falied\n", 2);
+		ft_putstr_fd("Error: monitor_join failed\n", 2);
 		return (clean_all(philo->data, philo));
 	}
 	while (i < philo->data->philo_n)
 	{
 		if (pthread_join(philo[i].philo_thread, NULL) != 0)
 		{
-			ft_putstr_fd("Error: philo_join falied\n", 2);
+			ft_putstr_fd("Error: philo_join failed\n", 2);
 			return (clean_all(philo->data, philo));
 		}
 		i++;
