@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
+/*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 16:37:19 by yhsu              #+#    #+#             */
-/*   Updated: 2024/07/18 19:41:04 by yhsu             ###   ########.fr       */
+/*   Updated: 2024/07/19 10:11:03 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ int			validate_input(int argc, char **argv);
 long		ft_atol(const char *str);
 int			ft_isdigit(char *str);
 int			ft_putstr_fd(char *s, int fd);
-//void		ft_usleep(long long millisecond);
-int	ft_usleep(long long millisecond, t_philo *philo);
+int			ft_usleep(long long millisecond, t_philo *philo);
 long long	get_current_time(void);
 
 /*philo routine*/

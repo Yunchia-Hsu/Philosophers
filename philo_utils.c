@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
+/*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 16:36:57 by yhsu              #+#    #+#             */
-/*   Updated: 2024/07/18 19:40:57 by yhsu             ###   ########.fr       */
+/*   Updated: 2024/07/19 10:10:45 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_usleep(long long millisecond, t_philo *philo)
 			return (1);
 		usleep(500);
 	}
-	return (0);	
+	return (0);
 }
 
 long long	get_current_time(void)
