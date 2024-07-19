@@ -15,7 +15,8 @@
 int	die_alone(t_philo *philo)
 {
 	//ft_usleep(philo->data->time_to_die);
-	ft_usleep(philo->data->time_to_die, philo);
+	if (ft_usleep(philo->data->time_to_die, philo))
+		return (1);
 	pthread_mutex_unlock(philo->r_fork);
 	return (1);
 }
@@ -42,7 +43,8 @@ static int	eat(t_philo *philo)
 	pthread_mutex_unlock(&philo->data->eating_lock);
 	
 	//ft_usleep(philo->data->time_to_eat);
-	ft_usleep(philo->data->time_to_eat, philo);
+	if (ft_usleep(philo->data->time_to_eat, philo))
+		return (1);
 	
 	pthread_mutex_unlock(philo->l_fork);
 	pthread_mutex_unlock(philo->r_fork);
@@ -55,7 +57,8 @@ static int	sleep_philo(t_philo *philo)
 	if (dead_or_finished(philo))
 		return (1);
 	//ft_usleep(philo->data->time_to_sleep);
-	ft_usleep(philo->data->time_to_sleep, philo);
+	if (ft_usleep(philo->data->time_to_sleep, philo))
+		return (1);
 	return (0);
 }
 
@@ -77,9 +80,7 @@ void	*philo_routine(void *ptr)
 		think(philo);
 		//ft_usleep(50);
 		ft_usleep(philo->data->time_to_eat / 2, philo);
-		
-	}
-		
+	}	
 	while (!dead_or_finished(philo))
 	{
 		if (eat(philo) == 1)
