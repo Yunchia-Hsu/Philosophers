@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
+/*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/18 16:36:20 by yhsu              #+#    #+#             */
-/*   Updated: 2024/07/18 16:37:45 by yhsu             ###   ########.fr       */
+/*   Created: 2024/07/09 08:19:34 by alli              #+#    #+#             */
+/*   Updated: 2024/07/19 14:31:06 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,14 @@ static	int	thread_join(pthread_t monitor, t_philo *philo)
 	i = 0;
 	if (pthread_join(monitor, NULL) != 0)
 	{
-		ft_putstr_fd("Error: monitor_join failed\n", 2);
+		ft_putstr_fd("Error: monitor_join falied\n", 2);
 		return (clean_all(philo->data, philo));
 	}
 	while (i < philo->data->philo_n)
 	{
 		if (pthread_join(philo[i].philo_thread, NULL) != 0)
 		{
-			ft_putstr_fd("Error: philo_join failed\n", 2);
+			ft_putstr_fd("Error: philo_join falied\n", 2);
 			return (clean_all(philo->data, philo));
 		}
 		i++;
@@ -106,22 +106,24 @@ int	init_threads(t_philo *philo, t_program *data)
 	pthread_t	monitor;
 	int			i;
 
-	i = 0;
+	i = -1;
 	if (pthread_create(&monitor, NULL,
 			&monitoring, philo))
 	{
 		ft_putstr_fd("Error: monitoring thread_creat failed\n", 2);
 		return (1);
 	}
-	while (i < data->philo_n)
+	while (++i < data->philo_n)
 	{
 		if (pthread_create(&philo[i].philo_thread, NULL,
 				&philo_routine, &philo[i]))
 		{
+			pthread_mutex_lock(&data->death_lock);
+			data->dead_philo_flag = true;
+			pthread_mutex_unlock(&data->death_lock);
 			ft_putstr_fd("Error: philo thread_create failed\n", 2);
-			return (clean_all(data, philo));
+			break ;
 		}
-		i++;
 	}
 	if (thread_join(monitor, philo) != 0)
 		return (1);

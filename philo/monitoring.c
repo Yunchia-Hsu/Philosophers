@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
+/*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/18 16:36:34 by yhsu              #+#    #+#             */
-/*   Updated: 2024/07/18 16:37:39 by yhsu             ###   ########.fr       */
+/*   Created: 2024/07/12 08:19:07 by alli              #+#    #+#             */
+/*   Updated: 2024/07/19 14:33:46 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	check_death_flag(t_program *data)
 	return (0);
 }
 
-int	hungery_to_die(t_program *data, t_philo *philo)
+static int	is_starving(t_program *data, t_philo *philo)
 {
 	long long	elapse;
 	long long	current_time;
@@ -49,7 +49,7 @@ int	death_check(t_program *data, t_philo *philo)
 	i = 0;
 	while (i < data->philo_n || check_death_flag(data))
 	{
-		if (hungery_to_die(data, &philo[i]))
+		if (is_starving(data, &philo[i]))
 		{
 			pthread_mutex_lock(&philo->data->print_lock);
 			pthread_mutex_lock(&data->death_lock);

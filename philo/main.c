@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
+/*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/18 16:36:28 by yhsu              #+#    #+#             */
-/*   Updated: 2024/07/18 16:37:41 by yhsu             ###   ########.fr       */
+/*   Created: 2024/07/17 14:29:33 by alli              #+#    #+#             */
+/*   Updated: 2024/07/19 11:00:16 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	validate_input(int argc, char **argv)
+static int	validate_input(int argc, char **argv)
 {
 	int	i;
 

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   valid_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
+/*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/18 16:37:07 by yhsu              #+#    #+#             */
-/*   Updated: 2024/07/18 16:37:11 by yhsu             ###   ########.fr       */
+/*   Created: 2024/07/18 11:25:11 by alli              #+#    #+#             */
+/*   Updated: 2024/07/19 10:57:02 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_isdigit(char *str)
+static int	ft_isdigit(char *str)
 {
 	int	i;
 
@@ -37,7 +37,7 @@ static int	check_longint(long num, int dig)
 	return (0);
 }
 
-int	str_char_check(const char *str)
+static int	str_char_check(const char *str)
 {
 	int	i;
 

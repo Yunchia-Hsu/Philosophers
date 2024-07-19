@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/18 16:37:19 by yhsu              #+#    #+#             */
-/*   Updated: 2024/07/19 10:11:03 by alli             ###   ########.fr       */
+/*   Created: 2024/07/10 08:18:33 by alli              #+#    #+#             */
+/*   Updated: 2024/07/19 10:57:46 by alli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,29 +54,24 @@ typedef struct s_philo
 	pthread_mutex_t	*r_fork;
 }	t_philo;
 
-/*main*/
-int			validate_input(int argc, char **argv);
-
 /*philosopher utilities*/
 long		ft_atol(const char *str);
-int			ft_isdigit(char *str);
 int			ft_putstr_fd(char *s, int fd);
 int			ft_usleep(long long millisecond, t_philo *philo);
 long long	get_current_time(void);
 
 /*philo routine*/
 void		*philo_routine(void *ptr);
-int			die_alone(t_philo *philo);
 
 /*dead or finished check*/
 int			dead_or_finished(t_philo *philo);
+int			starvation_check(t_philo *philo);
 int			finished_meals(t_philo *philo);
 
 /*initializing*/
 int			init_philo(t_philo	*philo, t_program *data);
 int			init_program(t_program *data, char **argv, int argc);
 int			init_threads(t_philo *philo, t_program *data);
-int			init_data_mutexes(t_program *data);
 
 /*printing*/
 void		print_action(t_philo *philo, char *str);
@@ -87,7 +82,6 @@ void		*monitoring(void *arg);
 int			meal_check(t_program *data, t_philo *philo);
 int			death_check(t_program *data, t_philo *philo);
 int			check_death_flag(t_program *data);
-int			hungery_to_die(t_program *data, t_philo *philo);
 
 /*clean all*/
 int			clean_all(t_program *data, t_philo *philo);
