@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 08:19:34 by alli              #+#    #+#             */
-/*   Updated: 2024/07/19 14:31:06 by alli             ###   ########.fr       */
+/*   Updated: 2024/07/19 15:38:33 by yhsu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	init_philo(t_philo	*philo, t_program *data)
 	return (0);
 }
 
-static	int	thread_join(pthread_t monitor, t_philo *philo)
+static	int	thread_join(pthread_t monitor, t_philo *philo, int n_of_philos)
 {
 	int	i;
 
@@ -89,7 +89,7 @@ static	int	thread_join(pthread_t monitor, t_philo *philo)
 		ft_putstr_fd("Error: monitor_join falied\n", 2);
 		return (clean_all(philo->data, philo));
 	}
-	while (i < philo->data->philo_n)
+	while (i < n_of_philos)
 	{
 		if (pthread_join(philo[i].philo_thread, NULL) != 0)
 		{
@@ -125,7 +125,7 @@ int	init_threads(t_philo *philo, t_program *data)
 			break ;
 		}
 	}
-	if (thread_join(monitor, philo) != 0)
+	if (thread_join(monitor, philo, i) != 0)
 		return (1);
 	return (0);
 }
