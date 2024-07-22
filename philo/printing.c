@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printing.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alli <alli@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: yhsu <student.hive.fi>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/12 09:31:46 by alli              #+#    #+#             */
-/*   Updated: 2024/07/18 11:29:04 by alli             ###   ########.fr       */
+/*   Created: 2024/07/22 11:53:45 by yhsu              #+#    #+#             */
+/*   Updated: 2024/07/22 11:53:47 by yhsu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	print_death(t_philo *philo)
 
 	pthread_mutex_lock(&philo->data->print_lock);
 	time = get_current_time() - philo->data->start_time;
-	printf("%lld %d %s", time, philo->philo_index, "has died\n");
+	printf("%lld %d %s", time, philo->philo_index, " died\n");
 	pthread_mutex_unlock(&philo->data->print_lock);
 	return ;
 }
